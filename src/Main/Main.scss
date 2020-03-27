@@ -1,0 +1,16 @@
+.errorDiv {
+  background: #ff5b5b;
+  animation-name: error;
+  animation-duration: 0.9s;
+  animation-iteration-count: infinite;
+  text-align: center;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.54);
+  //font-family: "Roboto";
+}
+
+@keyframes error {
+  0%{background-color: red;}
+  50% {background-color: #f4ff69;}
+  100%{background-color: red;}
+}

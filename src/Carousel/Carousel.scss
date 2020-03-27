@@ -1,0 +1,86 @@
+$n: 15;
+$item-width: 400px;
+$item-separation: 220px;
+$viewer-distance: 2000px;
+
+// Derived variables
+$theta: 2 * 3.141592653589793 / $n;
+$apothem: 482.842712474619px;
+.contener {
+  perspective: $viewer-distance;
+  //perspective-origin: bottom center;
+}
+.carousel {
+  //padding: 20px;
+  //perspective-origin: bottom center;
+  perspective-origin: left;
+  //overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > * {
+    flex: 0 0 auto;
+  }
+
+  figure {
+    margin: 0;
+    .cont {
+      padding: 0;
+      border: 1px solid;
+      background: #95d1e2;
+      color: #fff;
+      height: 50px;
+      user-select: none
+    }
+    width: $item-width;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    transform-origin: 50% 50% (-$apothem);
+
+    div {
+      width: 100%;
+      //height: 50px;
+      //background: #61dafb;
+      //border: 1px solid;
+      box-sizing: border-box;
+      padding: 0 $item-separation / 2;
+
+      //opacity: 0.95;
+
+      &:not(:first-of-type) {
+        position: absolute;
+        left: 0;
+        top: 0;
+        transform-origin: 50% 50% (-$apothem);
+      }
+
+      @for $i from 2 through $n {
+        &:nth-child(#{$i}) {
+          transform: rotateY(#{($i - 1) * $theta}rad);
+        }
+      }
+    }
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 0;
+
+    button {
+      flex: 0 0 auto;
+      margin: 0 5px;
+
+      cursor: pointer;
+
+      color: #333;
+      background: none;
+      border: 1px solid;
+      letter-spacing: 1px;
+      padding: 5px 10px;
+    }
+  }
+
+}
