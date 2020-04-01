@@ -49,6 +49,40 @@ const robotStat = {
     9: 'Zatrzymano zlecenie'
 };
 
+const errorsDetails = {
+    GStatErr: {
+        title: 'Wciśnięty wyłącznik awaryjny, upewnij się że',
+        items: [
+            'Filtry są na swoich miejscach',
+            'Brak obiektów trzecich w komorze',
+            'Wyłącznik awaryjny jest wyciśnięty'
+        ]
+    },
+    GErrFull: {
+        title: 'Nieoczekiwana obecność filtra',
+        items: ['Usuń filtr z ramienia podejnika']
+    },
+
+    GMassErr: {
+        title: 'Błąd masy zero',
+        items: ['LoremIpsum1']
+    },
+    GReferenceErr: {
+        title: 'Za duża różnica masy wzorca',
+        items: ['LoremIpsum2']
+    },
+    GErrEmpty: {
+        title: 'Nieoczekiwany brak filtra',
+        items: ['LoremIpsum3']
+    },
+    GStatMd: {
+        title: 'Drzwiczki otwarte',
+        items: [],
+        info: 'Zamknij drzwiczki.'
+    }
+
+};
+
 export default function Main(props) {
     const classes = useStyles();
     const [filter, setFilter] = useState('');
@@ -61,11 +95,15 @@ export default function Main(props) {
     const [lastPressure, setLastPressure] = useState(undefined);
     const [pressure, setPressure] = useState(undefined);
     const [backgroundStatus, setBackgroundStatus] = useState(undefined);
+    const [errors, setErrors] = useState(0);
+    const [list, setList] = useState([]);
     const step = 0.01
     const send = () => {
         // console.log('ccccc')
         props.socketAct.close();
     };
+
+    //check THB every 5 sec
     useEffect(() => {
         if (props.stat.THB && !lastTemp) {
             setTemp(props.stat.THB.Temperature);
@@ -94,7 +132,17 @@ export default function Main(props) {
         setFilter(filterType[props.stat.Filter_Type]);
         setRobotStatus(robotStat[props.stat.Robot_Status]);
         setRobotError(robotErr[props.stat.Main_Error]);
+        let errors = 0;
+        let err = []
         if (props.stat && props.stat.Main_Error) {
+            for (let elem in props.stat.Main_Error) {
+                // console.log(elem)
+                errors += props.stat.Main_Error[elem]
+                if (props.stat.Main_Error[elem] && errorsDetails[elem]) err.push(errorsDetails[elem])
+            }
+            setErrors(errors)
+            setList(err)
+            console.log('errors', err)
             for (let elem in props.stat.Main_Error) {
                 // console.log(elem)
                 if (props.stat.Main_Error[elem]) {
@@ -138,35 +186,36 @@ export default function Main(props) {
                         <p>Błąd ogólny sterownika </p>}
                         {props.stat.Main_Error && props.stat.Main_Error.GStatMd !== 0 &&
                         <p>Błąd otwartych drzwiczek </p>}
-                        {props.stat.Main_Error && props.stat.Main_Error.GMassErr !== 0 && <p>Błąd masy zero</p>}
+                        {props.stat.Main_Error && props.stat.Main_Error.GMassErr !== 0 &&
+                        <p>Błąd masy zero</p>}
                         {props.stat.Main_Error && props.stat.Main_Error.GReferenceErr !== 0 &&
                         <p>Za duża różnica masy wzorca</p>}
                         {props.stat.Main_Error && props.stat.Main_Error.GErrFull !== 0 &&
                         <p>Nieoczekiwana obecność filtra</p>}
                         {props.stat.Main_Error && props.stat.Main_Error.GErrEmpty !== 0 &&
                         <p>Nieoczekiwany brak filtra</p>}
-                        {props.stat.Main_Error && props.stat.Main_Error.GStatErr !== 0 && <Alert
-                            title={'Wciśnięty wyłącznik awaryjny'}
-                            list={['Filtry są na swoich miejscach', 'Drzwiczki są zamknięte', 'Brak obiektów trzecich w komorze', 'Wyłącznik awaryjny jest wyciśnięty']}
+
+                        {props.stat.Main_Error && errors && <Alert
+                            title={'Błąd'}
+                            // list={['Filtry są na swoich miejscach', 'Drzwiczki są zamknięte', 'Brak obiektów trzecich w komorze', 'Wyłącznik awaryjny jest wyciśnięty']}
+                            list={list}
                             click={sendReset}
-                        />}
-                        {props.stat.Main_Error && props.stat.Main_Error.GStatMd !== 0 && <Alert
-                            title={'Drzwiczki otwarte'}
-                            list={[]}
-                            info={'Zamknij drzwiczki. Proces uruchomi się automatycznie po ich zamknięciu '}
-                            // list={['Filtry są na swoich miejscach', 'Drzwiczki są zamknięte', 'Brak obiektów trzecich w komorze','Wyłącznik awaryjny jest wyciśnięty']}
-                        />}
-                        {props.stat.Main_Error && props.stat.Main_Error.GErrFull !== 0 && <Alert
-                            title={'Nieoczekiwana obecność filtra'}
-                            list={['Usuń filtr z ramienia podejnika']}
-                            // info={}
-                            click={sendReset}
-                            // list={['Filtry są na swoich miejscach', 'Drzwiczki są zamknięte', 'Brak obiektów trzecich w komorze','Wyłącznik awaryjny jest wyciśnięty']}
+                            errors={errors}
+                            doors={props.stat.Main_Error.GStatMd}
                         />}
 
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={6} xl={3}>
+                    <Paper className={classes.paper} style={{height: 400}}>
+
+                        <h2 style={{fontSize: '2em'}}>SĄCZEK:</h2>
+                        <p>Numer sączka: {props.stat && props.stat.Qr}</p>
+                        <p>Masa sączka: {props.stat && props.stat.Mass}</p>
+                        <p>Położenie: {props.stat && props.stat.Level}/{props.stat.Rotation}</p>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={6} xl={6}>
                     <Paper className={classes.paper} style={{height: 400}}>
                         <h2 style={{fontSize: '2em'}}>THB STATUS:</h2>
                         <div style={{display: "flex"}}>
@@ -207,15 +256,7 @@ export default function Main(props) {
                         </div>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={6} xl={3}>
-                    <Paper className={classes.paper} style={{height: 400}}>
 
-                        <h2 style={{fontSize: '2em'}}>SĄCZEK:</h2>
-                        <p>Numer sączka: {props.stat && props.stat.Qr}</p>
-                        <p>Masa sączka: {props.stat && props.stat.Mass}</p>
-                        <p>Położenie: {props.stat && props.stat.Level}/{props.stat.Rotation}</p>
-                    </Paper>
-                </Grid>
                 <Grid item xs={12} md={6} xl={3}>
                     <Paper className={classes.paper} style={{height: 400}}>
                         <div style={{display: "flex"}}>
@@ -231,24 +272,24 @@ export default function Main(props) {
                         <h3>{Time && Time.Start_Time_Description}</h3>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} xl={6}>
+                <Grid item xs={12} xl={9}>
                     {/*<Paper className={props.stat.Main_Error ? 'errorDiv' : classes.paper}*/}
                     <Paper className={classes.paper}
                            style={{minHeight: 400, color: 'rgba(0, 0, 0, 0.54)'}}>
-                        <h1>Nazwa zlecenia: {props.stat && props.stat.Order_Name}</h1>
-                        <h2>Opis: </h2><p>{props.stat && props.stat.Order_Desc}</p>
-                        <img src={cos} width={48}/>
+                        {/*<h1>Nazwa zlecenia: {props.stat && props.stat.Order_Name}</h1>*/}
+                        {/*<h2>Opis: </h2><p>{props.stat && props.stat.Order_Desc}</p>*/}
+                        {/*<img src={cos} width={48}/>*/}
                     </Paper>
                 </Grid>
-                <Grid item xs={12} xl={6}>
-                    {/*<Paper className={props.stat.Main_Error ? 'errorDiv' : classes.paper}*/}
-                    <Paper className={classes.paper}
-                           style={{minHeight: 400, color: 'rgba(0, 0, 0, 0.54)'}}>
-                        <h1>Nazwa zlecenia: {props.stat && props.stat.Order_Name}</h1>
-                        <h2>Opis: </h2><p>{props.stat && props.stat.Order_Desc}</p>
-                        <img src={cos} width={48}/>
-                    </Paper>
-                </Grid>
+                {/*<Grid item xs={12} xl={6}>*/}
+                {/*    /!*<Paper className={props.stat.Main_Error ? 'errorDiv' : classes.paper}*!/*/}
+                {/*    <Paper className={classes.paper}*/}
+                {/*           style={{minHeight: 400, color: 'rgba(0, 0, 0, 0.54)'}}>*/}
+                {/*        <h1>Nazwa zlecenia: {props.stat && props.stat.Order_Name}</h1>*/}
+                {/*        <h2>Opis: </h2><p>{props.stat && props.stat.Order_Desc}</p>*/}
+                {/*        <img src={cos} width={48}/>*/}
+                {/*    </Paper>*/}
+                {/*</Grid>*/}
             </Grid>
         </div>
     );

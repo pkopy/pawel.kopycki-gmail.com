@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './Carousel.scss'
-
+import kolo from '../images/arrow.svg'
+import DisplayRow from "./DisplayRow";
 
 export default function ListPanel(props) {
     const carousel = React.useRef();
@@ -9,8 +10,9 @@ export default function ListPanel(props) {
     const theta = 2 * Math.PI / numImages;
     const [currImage, setCurrentImage] = useState(0);
     const [pos, setPos] = useState(0);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(30);
     const clickButton = (e, increase = true) => {
+        // console.log(e)
         let x = currImage;
         let y = pos;
         increase ? ++x: --x;
@@ -25,21 +27,36 @@ export default function ListPanel(props) {
     const details = () => {
         // console.log(props.data[currImage])
     };
-    useEffect(() => {
-        console.log(props.data)
-        props.setDetails(props.data[2])
-    },[]);
-
+    // useEffect(() => {
+    //     let y = 0
+    //     const timer = setInterval(() => {
+    //
+    //         y += 10
+    //         if (y >= 200) clearInterval(timer)
+    //         console.log(y)
+    //         figure.current.style.height = y
+    //     }, 100)
+    //
+    // });
+    useEffect(() =>{
+        props.setCarousel(figure)
+    },[props.active])
 
     return (
         <>
-
+            {props.children}
             <div className="carousel" ref={carousel} style={{zIndex: props.zIndex}}>
+                <div >
+                    {props.test}
+                </div>
+                {props.active&&<div style={{position:"absolute", left:1150}}>
+                    <DisplayRow number={currImage + 1}/>
+                </div>}
                 <figure ref={figure}>
                     {props.data && props.data.map((elem, i) =>
-                        <div key={i} onClick={()=>console.log(elem)}>
+                        <div key={i} onClick={()=>setData(200)}>
                             {elem.FilterIndex&&<div className={'cont'}
-                                 style={{height: props.height, opacity: props.opacity, background: elem.Status === 8?'#ff5b5b':props.background, zIndex:50}}
+                                 style={{padding:5,height: props.height, opacity: props.opacity, background: elem.Status === 8?'#ff5b5b':props.background, zIndex:50, color: props.active?'#fff':'#535A80',transition: '.5s'}}
                                  onClick={() => console.log(elem)}>
 
                                 <p>Filter index: {elem.FilterIndex}</p>
@@ -47,6 +64,8 @@ export default function ListPanel(props) {
                                 {props.active&&<p>QRCODE: {elem.QRCode}</p>}
                                 {props.active&&<p>Last Mass: {elem.LastMass}</p>}
                                 {props.active&&<p>Status: {elem.Status}</p>}
+                                {/*<p style={{position:"fixed", bottom: 0}}>{elem.DiskIndex}</p>*/}
+
                             </div>}
                             {!elem.FilterIndex&&<div className={'cont'}
                                                    style={{height: props.height, opacity: props.opacity, background: '#d2d2d2', zIndex:50}}
@@ -61,18 +80,43 @@ export default function ListPanel(props) {
 
                         </div>
                     )}
+
                 </figure>
 
 
-            </div>
-            <div>
+                    {/*<button className="nav prev" onClick={(e) => clickButton(e, false)}>Prev</button>*/}
+                    {/*<button className="nav next" onClick={clickButton}>Next</button>*/}
 
-                {props.active&&<nav style={{position:"fixed", bottom: 0}}>
-                    <button className="nav prev" onClick={(e) => clickButton(e, false)}>Prev</button>
-                    <button className="nav next" onClick={clickButton}>Next</button>
-                    {/*<button onClick={() => props.setDetails(props.data[currImage])}>ccccc</button>*/}
-                </nav>}
+
+
             </div>
+            {/*{props.data&&props.active&&<DisplayRow number={props.data[0].DiskIndex} change={props.change}/>}*/}
+
+                {/*{props.data&&props.active&&<div style={{position:"fixed", bottom: 200, left:350, fontSize:'4em', fontWeight:'bold'}}>*/}
+                {/*    {props.data[0].DiskIndex}/{currImage}*/}
+                {/*</div>}*/}
+
+            {props.active&&<div style={{position:"fixed", bottom:150, height:100, width:'100%', zIndex:10}}>
+                <div style={{width:1050,marginLeft:"auto", marginRight:"auto", position:"relative",}}>
+                    {props.active&&<div style={{width:100}} onClick={clickButton}>
+                        <img src={kolo} width='100px' style={{transform:'rotate(90deg)'}}/>
+                    </div>}
+                    {props.active &&<div style={{width:100, position:"absolute", right:0, top:0}} onClick={(e) => clickButton(e, false)}>
+                        <img src={kolo} width='100px'style={{transform:'rotate(-90deg)'}}/>
+                    </div>}
+                </div>
+
+            </div>}
+
+                {/*{props.active&&<nav style={{position:"absolute"}}>*/}
+                {/*    <div style={{transform:'rotate(90deg)'}} onClick={clickButton}>*/}
+                {/*        <img src={kolo} width='100px'/>*/}
+                {/*    </div>*/}
+                {/*    /!*<button className="nav prev" onClick={(e) => clickButton(e, false)}>Prev</button>*!/*/}
+                {/*    /!*<button className="nav next" onClick={clickButton}>Next</button>*!/*/}
+
+                {/*</nav>}*/}
+
         </>
     )
 }

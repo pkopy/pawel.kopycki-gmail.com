@@ -29,6 +29,7 @@ import Carousel from "../Carousel/Carousel";
 import Main from "../Main/Main";
 import Date from "../Date/Date";
 import kolo from '../images/kolo.svg'
+import Kebab from "../Kebab/Kebab";
 
 
 const drawerWidth = 240;
@@ -108,44 +109,24 @@ export default function MiniDrawer(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    useEffect(() => {
-        if (props.kebabData) {
-            // console.log(props.kebabData)
-            // let keys = Object.keys(props.kebabData).reverse()
-            let keys = Object.keys(props.kebabData).slice(props.activeRow - 2, 3 + props.activeRow).reverse()
-            // if (keys.length < 5) {
-                // const length = 5 - keys.length
-                // for (let i = 1; i < 6; i++) {
-                //     keys.push(i.toString())
-                // }
-            // }
-        console.log(keys)
-            setRowKebab(keys)
-        }
-    }, [props.kebabData])
-    // const _carousel = () => {
+    // useEffect(() => {
     //     if (props.kebabData) {
-    //         console.log(props.kebabData)
-    //         let keys = Object.keys(props.kebabData)
-    //         for (let elem of keys) {
-    //
-    //                 <Carousel
-    //                     data={elem}
-    //                     height={200}
-    //                     opacity={0.95}
-    //                     background={'#1796E2'}
-    //                     zIndex={2}
-    //                     setDetails={setDetails}
-    //                 />
-    //
-    //         }
+    //         // console.log(props.kebabData)
+    //         // let keys = Object.keys(props.kebabData).reverse()
+    //         let keys = Object.keys(props.kebabData).slice(props.activeRow - 2, 3 + props.activeRow).reverse()
+    //         // if (keys.length < 5) {
+    //         // const length = 5 - keys.length
+    //         // for (let i = 1; i < 6; i++) {
+    //         //     keys.push(i.toString())
+    //         // }
+    //         // }
+    //         // console.log(keys)
+    //         setRowKebab(keys)
     //     }
-    // }
+    // }, [props.kebabData, props.activeRow])
+
     const upRow = () => {
         let x = props.activeRow
-        // let keys = Object.keys(props.kebabData).slice(props.activeRow - 2,3 + props.activeRow).reverse()
-        // console.log(keys)
-        // setRowKebab(keys)
         if (active > 2) {
             setActive(active - 1)
         } else if (x < rowKebab.length - 1) {
@@ -166,12 +147,12 @@ export default function MiniDrawer(props) {
         if (active < 2) {
             setActive(active + 1)
         } else if (active === 2 && props.activeRow > 2) {
-            let x = props.activeRow
-            props.setActiveRow(--x)
-            // console.log(activeRow)
-        } else if (props.activeRow <= 2 && active < 4) {
+            props.setActiveRow(props.activeRow - 1)
+        } else if (props.activeRow < 3 && active < 4) {
+            // props.setActiveRow(props.activeRow - 1)
             setActive(active + 1)
         }
+        // console.log(active)
 
         // console.log(props.activeRow)
 
@@ -186,17 +167,6 @@ export default function MiniDrawer(props) {
                 })}
             >
                 <Toolbar>
-                    {/*<IconButton*/}
-                    {/*    color="inherit"*/}
-                    {/*    aria-label="open drawer"*/}
-                    {/*    onClick={handleDrawerOpen}*/}
-                    {/*    edge="start"*/}
-                    {/*    className={clsx(classes.menuButton, {*/}
-                    {/*        [classes.hide]: open,*/}
-                    {/*    })}*/}
-                    {/*>*/}
-                    {/*    <MenuIcon />*/}
-                    {/*</IconButton>*/}
                     <Typography variant="h6" noWrap>
                         Tutaj nazwa
                     </Typography>
@@ -221,14 +191,6 @@ export default function MiniDrawer(props) {
                     </IconButton>
                 </div>
                 <Divider/>
-                {/*<List>*/}
-                {/*    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
-                {/*        <ListItem button key={text}>*/}
-                {/*            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>*/}
-                {/*            <ListItemText primary={text} />*/}
-                {/*        </ListItem>*/}
-                {/*    ))}*/}
-                {/*</List>*/}
                 <List>
                     <Link to='/' className='link'>
                         <ListItem button>
@@ -281,58 +243,14 @@ export default function MiniDrawer(props) {
                         <Date/>
                     </Route>
                     <Route path='/kebab'>
-                        <div className="contener">
-                            {rowKebab && rowKebab.map((elem, ind) => {
-                                    // console.log(props.kebabData[elem])
-                                    let newData = []
 
-                                    let x = ind
-                                    // console.log(x)
-                                    for (let i = 0; i < 15; i++) {
-                                        if (props.kebabData[elem]&&props.kebabData[elem][i]) {
-                                            // console.log(props.data[i])
-                                            newData.push(props.kebabData[elem][i])
-                                        } else {
-                                            newData.push({})
-                                        }
-                                    }
-                                    // setDetails(active)
-                                    return (
-                                        <>
-                                            {ind === active && <Carousel
-                                                data={newData}
-                                                height={200}
-
-                                                opacity={0.95}
-                                                background={'#1796E2'}
-                                                zIndex={2}
-                                                active={true}
-                                                setDetails={setDetails}
-                                                style={{transform:'1s'}}
-                                            />}
-                                            {ind !== active && <Carousel
-                                                data={newData}
-                                                // opacity={0.8}
-                                                // background={'#1796E2'}
-                                                active={false}
-                                                zIndex={ind > active ? -ind : ind}
-                                                setDetails={setDetails}
-                                            />}
-                                        </>
-
-                                    )
-                                }
-                            )}
-
-
-                        </div>
-                        <div>
-                            {details && details.FilterIndex && <p>{details.FilterIndex}</p>}
-                            {details && <p>{details.DiskIndex}</p>}
-                            <p>active row = {props.activeRow}</p>
-                        </div>
-                        <button onClick={upRow}>UP</button>
-                        <button onClick={downRow}>DOWN</button>
+                        <Kebab
+                            details={details}
+                            setDetails={setDetails}
+                            kebabData={props.kebabData}
+                            activeRow={props.activeRow}
+                            setActiveRow={props.setActiveRow}
+                        />
                     </Route>
                 </Switch>
 
