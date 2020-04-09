@@ -11,6 +11,8 @@ import okArrow from '../images/okArrow.svg'
 import lowArrow from '../images/lowArrow.svg'
 import hiArrow from '../images/hiArrow.svg'
 import clock from '../images/clock.svg'
+import Chart from "../Chart/Chart";
+import Orders from "../Orders/Orders";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -142,7 +144,7 @@ export default function Main(props) {
             }
             setErrors(errors)
             setList(err)
-            console.log('errors', err)
+            // console.log('errors', err)
             for (let elem in props.stat.Main_Error) {
                 // console.log(elem)
                 if (props.stat.Main_Error[elem]) {
@@ -180,7 +182,7 @@ export default function Main(props) {
                         <h2 style={{fontSize: '2em'}}>STATUS:</h2>
                         {/*<h3>Rodzaj filtra:</h3>*/}
                         <h3>{filter}</h3>
-                        <h3>{robotStatus}</h3>
+                        {/*<h3>{robotStatus}</h3>*/}
                         {backgroundStatus && <h3>Błąd: </h3>}
                         {props.stat.Main_Error && props.stat.Main_Error.GStatErr !== 0 &&
                         <p>Błąd ogólny sterownika </p>}
@@ -195,7 +197,7 @@ export default function Main(props) {
                         {props.stat.Main_Error && props.stat.Main_Error.GErrEmpty !== 0 &&
                         <p>Nieoczekiwany brak filtra</p>}
 
-                        {props.stat.Main_Error && errors && <Alert
+                        {props.stat.Main_Error && errors.length > 0 && <Alert
                             title={'Błąd'}
                             // list={['Filtry są na swoich miejscach', 'Drzwiczki są zamknięte', 'Brak obiektów trzecich w komorze', 'Wyłącznik awaryjny jest wyciśnięty']}
                             list={list}
@@ -209,13 +211,43 @@ export default function Main(props) {
                 <Grid item xs={12} md={6} xl={3}>
                     <Paper className={classes.paper} style={{height: 400}}>
 
-                        <h2 style={{fontSize: '2em'}}>SĄCZEK:</h2>
-                        <p>Numer sączka: {props.stat && props.stat.Qr}</p>
-                        <p>Masa sączka: {props.stat && props.stat.Mass}</p>
-                        <p>Położenie: {props.stat && props.stat.Level}/{props.stat.Rotation}</p>
+                        <h2 style={{fontSize: '2em'}}>FILTR:</h2>
+                        <p style={{fontSize: '1.5em'}}>Numer
+                            sączka: {props.stat && props.stat.Qr > 0 ? props.stat.Qr : '--'}</p>
+                        <p style={{fontSize: '1.5em'}}>Masa
+                            sączka: {props.stat && props.stat.Mass > 0 ? props.stat.Mass : '--'}</p>
+                        <p style={{fontSize: '1.5em'}}>Położenie: {props.stat && props.stat.FilterInfo ? props.stat.FilterInfo : '--'}</p>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={6} xl={6}>
+                    <Paper className={classes.paper} style={{height: 400, overflow: "auto"}}>
+                        <h2 style={{fontSize: '2em'}}>AKTUALNE ZLECENIA:</h2>
+                        <Orders
+                            data={props.stat.OrdersInProgress}
+                        />
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={12} md={6} xl={3}>
+                    <Paper className={classes.paper} style={{height: 400}}>
+                        <div style={{display: "flex"}}>
+
+                            <img src={clock} width={50}/>
+
+                        </div>
+
+                            <h2 style={{fontSize: "3em", textAlign:"center"}}>
+                                <DatePanel
+                                    time={props.stat}
+                                />
+                            </h2>
+
+
+                        {/*<p style={{fontSize: '1.2em'}}><b>Start zlecenia:</b> {Time && Time.Start_Time}</p>*/}
+                        {/*<h3>{Time && Time.Start_Time_Description}</h3>*/}
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={3} xl={3}>
                     <Paper className={classes.paper} style={{height: 400}}>
                         <h2 style={{fontSize: '2em'}}>THB STATUS:</h2>
                         <div style={{display: "flex"}}>
@@ -257,28 +289,16 @@ export default function Main(props) {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12} md={6} xl={3}>
-                    <Paper className={classes.paper} style={{height: 400}}>
-                        <div style={{display: "flex"}}>
-
-                            <img src={clock} width={50}/>
-                            <h2 style={{marginLeft: 30, marginTop: 5}}>
-                                <DatePanel
-                                    time={props.stat}
-                                />
-                            </h2>
-                        </div>
-                        <p style={{fontSize: '1.2em'}}><b>Start zlecenia:</b> {Time && Time.Start_Time}</p>
-                        <h3>{Time && Time.Start_Time_Description}</h3>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} xl={9}>
+                <Grid item xs={12} md={9} xl={6}>
                     {/*<Paper className={props.stat.Main_Error ? 'errorDiv' : classes.paper}*/}
                     <Paper className={classes.paper}
                            style={{minHeight: 400, color: 'rgba(0, 0, 0, 0.54)'}}>
                         {/*<h1>Nazwa zlecenia: {props.stat && props.stat.Order_Name}</h1>*/}
                         {/*<h2>Opis: </h2><p>{props.stat && props.stat.Order_Desc}</p>*/}
                         {/*<img src={cos} width={48}/>*/}
+                        <Chart
+                            stat={props.stat}
+                        />
                     </Paper>
                 </Grid>
                 {/*<Grid item xs={12} xl={6}>*/}

@@ -30,98 +30,7 @@ import Carousel from "./Carousel/Carousel";
 //             "Pressure" :1002
 //         }
 // }
-const data = [
-    {
-        "FilterIndex": 1,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 2,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 3,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 4,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 5,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 6,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 7,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 8,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 9,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 10,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 11,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 12,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 13,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 14,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    },
-    {
-        "FilterIndex": 15,
-        "QRCode": "064435",
-        "Customer": "jasio",
-        "Mass1": 0.145834
-    }
-]
+
 
 function App() {
     const [socketAct, setSocketAct] = React.useState({});
@@ -167,7 +76,7 @@ function App() {
 
         // console.log('new',newData)
         if (stat &&stat.OrderDetailsInfo&&stat.OrderDetailsInfo.length > 0)  {
-
+            console.log(stat)
             // for (let i = 0; i < 15; i++) {
             //     if (props.data[i]) {
             //         console.log(props.data[i])
@@ -194,7 +103,7 @@ function App() {
 
     return (
         <Drawer
-            data={data}
+            // data={data}
             stat={stat}
             kebabData={kebabData}
             setKebabData={setKebabData}

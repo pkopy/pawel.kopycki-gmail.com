@@ -32,7 +32,7 @@ export default function Alert(props) {
     const handleClickOpen = () => {
         setOpen(true);
     };
-    console.log("props:",props)
+    // console.log("props:",props)
     const handleClose = () => {
         setOpen(false);
     };

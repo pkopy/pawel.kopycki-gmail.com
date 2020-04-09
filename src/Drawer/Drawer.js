@@ -99,7 +99,7 @@ export default function MiniDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const [details, setDetails] = React.useState(props.data[0])
+    const [details, setDetails] = React.useState()
     const [rowKebab, setRowKebab] = React.useState([]);
     const [active, setActive] = React.useState(2)
     const handleDrawerOpen = () => {
