@@ -30,6 +30,7 @@ import Main from "../Main/Main";
 import Date from "../Date/Date";
 import kolo from '../images/kolo.svg'
 import Kebab from "../Kebab/Kebab";
+import DisplayRow from "../Carousel/DisplayRow";
 
 
 const drawerWidth = 240;
@@ -102,6 +103,7 @@ export default function MiniDrawer(props) {
     const [details, setDetails] = React.useState()
     const [rowKebab, setRowKebab] = React.useState([]);
     const [active, setActive] = React.useState(2)
+    const [fakeData, setFakeData] = React.useState([])
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -125,6 +127,37 @@ export default function MiniDrawer(props) {
     //     }
     // }, [props.kebabData, props.activeRow])
 
+    const makeFakeData = (num) => {
+        const f = (i) =>{
+            let arr = []
+            for (let j = 0; j < 15; j++) {
+                let d = {DiskIndex: i+1, FilterIndex: j+1, Status:2}
+
+                arr.push(d)
+
+            }
+            return arr
+        }
+        let data =[]
+        for (let i = 0; i < num; i++) {
+            if (props.kebabData[18]) {
+
+               let x =  f(i)
+                data.push(x)
+            }
+
+        }
+        setFakeData(data)
+
+
+    }
+
+
+    useEffect(() => {
+        console.log(props.kebabData, 'kebabData')
+        makeFakeData(10)
+        console.log(fakeData,'fake data')
+    },[props.kebabData])
     const upRow = () => {
         let x = props.activeRow
         if (active > 2) {
@@ -240,14 +273,15 @@ export default function MiniDrawer(props) {
                         />
                     </Route>
                     <Route path='/orderlist'>
-                        <Date/>
+                        <DisplayRow number={3}></DisplayRow>
                     </Route>
                     <Route path='/kebab'>
 
                         <Kebab
                             details={details}
                             setDetails={setDetails}
-                            kebabData={props.kebabData}
+                            // kebabData={props.kebabData}
+                            kebabData={fakeData}
                             activeRow={props.activeRow}
                             setActiveRow={props.setActiveRow}
                         />

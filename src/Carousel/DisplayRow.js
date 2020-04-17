@@ -5,6 +5,7 @@ export default function (props) {
     const [prevNumber, setPrevNumber] = useState()
     const [number, setNumber] = useState(props.number)
     const [vis, setVis] = useState('hidden')
+    const [opa, setOpa] = useState(1)
     useEffect(() => {
         console.log(props)
         setVis('hidden')
@@ -13,17 +14,17 @@ export default function (props) {
             //     setHeight(220)
             // }else{
 
-                setHeight(-220)
+            setHeight(-220)
 
             // }
             // setHeight(-220)
-        },200)
+        }, 200)
 
         // // setHeight(-200)
         setTimeout(() => {
             setVis('visible')
             setPrevNumber(number)
-            setNumber(props.number  )
+            setNumber(props.number)
 
             setHeight(-30)
         }, 400)
@@ -44,20 +45,37 @@ export default function (props) {
         //     setHeight(0)
         // }
     }, [props.number])
-
+    // useEffect(() =>{
+    //     setTimeout(() => {
+    //
+    //         setOpa(0)
+    //     },1000)
+    //     setTimeout(() => {
+    //
+    //         setOpa(1)
+    //     },1500)
+    //
+    // },[])
 
     return (
-        <div style={{fontSize: '15em', position:"absolute", left:280,overflow: 'hidden',
+        <div>
 
-            // border: '1px solid',
-            width: 250,
-            height: 200}}>
-            <div style={{top: height, opacity: 1, position: 'absolute',transition:'.2s', visibility: vis}}>
-                {number}
-                {props.children}
-                {/*{prevNumber}*/}
+            {/*<button onClick={() => setOpa(0)}>iiii</button>*/}
+            <div style={{
+                fontSize: '15em', position: "absolute", left: 280, overflow: 'hidden',
+
+                // border: '1px solid',
+                width: 250,
+                height: 200
+            }}>
+                <div style={{top: height, opacity: opa, position: 'absolute', transition: '.2s', visibility: vis}}>
+                    {number}
+                    {props.children}
+                    {/*{prevNumber}*/}
+                </div>
+
+                {/*<button style={{ position: 'absolute'}}onClick={setNum}>JJJJJ</button>*/}
             </div>
-            {/*<button style={{ position: 'absolute'}}onClick={setNum}>JJJJJ</button>*/}
         </div>
     )
 

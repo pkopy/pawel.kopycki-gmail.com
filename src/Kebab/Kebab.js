@@ -9,79 +9,130 @@ export default function Kebab(props) {
     // const [six, setSix]= useState(false)
     const [carousel, setCarousel] = useState({})
     const [change, setChange] = useState(false)
+    const [init, setInit] = useState(true)
     useEffect(() => {
         if (props.kebabData) {
             // console.log(props.kebabData)
             let keys = Object.keys(props.kebabData);
+            // setRowKebab(keys.slice(0,5).reverse());
+
+            if (init &&props.kebabData.length > 0)  {
+                let x = props.kebabData
+                if (props.kebabData.length < 5) {
+                    x.push([{Status:8}])
+                }
+                let keys = Object.keys(x);
+                setRowKebab(keys.slice(0,5).reverse());
+                setInit(false)
+            }
+            if (props.activeRow > 4)  {
+                // setRowKebab(keys.slice().reverse());
+            }
             // let data =
             // if (keys.length === 6) {
-            if (props.activeRow + 3 > keys.length -1) {
-                // setActive(1)
-                // setSix(true)
-                // props.setActiveRow(props.activeRow + 1)
-                setRowKebab(keys.slice(keys.length - 5, keys.length).reverse())
-            } else {
-                // setSix(false)
-                setRowKebab(keys.slice(props.activeRow - 2, 3 + props.activeRow).reverse())
-            }
+            // if (props.activeRow + 3 > keys.length -1) {
+            //     // setActive(1)
+            //     // setSix(true)
+            //     // props.setActiveRow(props.activeRow + 1)
+            //     setRowKebab(keys.slice(keys.length - 5, keys.length).reverse())
+            //     console.log(keys.slice(keys.length - 5, keys.length).reverse(), 'row')
+            // } else {
+            //     // setSix(false)
+            //     setRowKebab(keys.slice(props.activeRow - 2, 3 + props.activeRow).reverse())
+            //     console.log(keys.slice(props.activeRow - 2, 3 + props.activeRow).reverse(), 'row')
+            // }
             // } else if (keys.length === 1) {
             //     setActive(1)
             // }
             // console.log(keys)
         }
-    }, [props.kebabData, props.activeRow])
+    }, [props.kebabData])
 
 
     // console.log('render')
     const upRow = () => {
         let x = props.activeRow
+        console.log(active, change, props.activeRow, 'down up')
         // console.log(carousel)
-        setChange(!change)
+
         carousel.current.style.height='red'
-        if (active > 2) {
-            setActive(active - 1)
-        } else if (x < rowKebab.length - 1 ) {
-
-                // if (six) {
-                //
-                //     props.setActiveRow(props.activeRow + 2)
-                //     setActive(active - 1)
-                // } else {
-
-                    props.setActiveRow(props.activeRow + 1)
-                // }
-
-            // setActive(active + 1)
-        } else if (active > 0) {
-            // //     props.setKebabData(props.kebabData)
-            //     console.log(active)
-            setActive(active - 1)
+        if(active > 0) {
+            setActive(active-1)
+            props.setActiveRow(props.activeRow + 1)
         }
+        if (active === 0 && props.activeRow < props.kebabData.length-1)  {
+            // setChange(!change)
+            let keys = Object.keys(props.kebabData);
+            setRowKebab(keys.slice(props.activeRow - 3, props.activeRow+2).reverse());
+            props.setActiveRow(props.activeRow + 1)
+            setActive(0)
+            console.log(rowKebab, 'down')
+        }
+        // if (active > 2) {
+        //     setActive(active - 1)
+        // } else if (x < rowKebab.length - 1 ) {
+        //
+        //         // if (six) {
+        //         //
+        //         //     props.setActiveRow(props.activeRow + 2)
+        //         //     setActive(active - 1)
+        //         // } else {
+        //
+        //             props.setActiveRow(props.activeRow + 1)
+        //         // }
+        //
+        //     // setActive(active + 1)
+        // } else if (active > 0) {
+        //     // //     props.setKebabData(props.kebabData)
+        //     //     console.log(active)
+        //     setActive(active - 1)
+        // }
 
         // console.log(props.activeRow)
         // console.log(activeRow)
     }
     const downRow = () => {
         setChange(!change)
-        if (active < 2) {
+        console.log(active, change, props.activeRow, props.kebabData.length,'down')
+        if (active < rowKebab.length-1) {
             setActive(active + 1)
-        } else if (active === 2 && props.activeRow > 2) {
-            // if (six) {
-            //
-            //     props.setActiveRow(props.activeRow - 2)
-            //     setActive(active + 1)
-            // } else {
-            //
-                props.setActiveRow(props.activeRow - 1)
-            // }
-        } else if (props.activeRow < 3 && active < 4) {
-            // props.setActiveRow(props.activeRow - 1)
-            setActive(active + 1)
+            props.activeRow === props.kebabData.length-1?props.setActiveRow(props.activeRow - 1):props.setActiveRow(props.activeRow - 1)
         }
+        if (props.activeRow === props.kebabData.length-1) {
+            props.setActiveRow(props.activeRow - 1)
+        }
+        if (active === 4 && props.activeRow > 0)  {
+            // setChange(!change)
+            let keys = Object.keys(props.kebabData);
+            console.log((keys.slice(props.activeRow-1, props.activeRow+4).reverse()), 'down key')
+            setRowKebab(keys.slice(props.activeRow-1, props.activeRow+4).reverse());
+            props.setActiveRow(props.activeRow -1)
+            // setActive(0)
+            console.log(rowKebab, 'down')
+        }
+        if (active === props.kebabData.length-3) {
+            props.setActiveRow(0)
+        }
+        // if (active < 2) {
+        //     setActive(active + 1)
+        //     // props.setActiveRow(props.activeRow - 1)
+        // } else if (active === 2 && props.activeRow >2) {
+        //     // if (six) {
+        //     //
+        //     //     props.setActiveRow(props.activeRow - 2)
+        //     //     setActive(active + 1)
+        //     // } else {
+        //     //
+        //         props.setActiveRow(props.activeRow - 1)
+        //     // }
+        // } else if (props.activeRow < 3 && active < 4) {
+        //     // props.setActiveRow(props.activeRow - 1)
+        //     setActive(active + 1)
+        // }
         // console.log(active)
 
         // console.log(props.activeRow)
-
+        // console.log(active, change, props.activeRow, 'down =')
     }
 
     return (
@@ -154,7 +205,9 @@ export default function Kebab(props) {
             </div>
             {/*<button onClick={upRow}>UP</button>*/}
             {/*<button onClick={downRow}>DOWN</button>*/}
-            <p>active = {props.activeRow}</p>
+            <p>active ROW= {props.activeRow +1 }</p>
+            <p>active={active}</p>
+            <p>length = {props.kebabData.length - 1}</p>
         </div>
     )
 }
