@@ -15,6 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import dict from '../dictionary'
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
@@ -31,7 +32,7 @@ import Date from "../Date/Date";
 import kolo from '../images/kolo.svg'
 import Kebab from "../Kebab/Kebab";
 import DisplayRow from "../Carousel/DisplayRow";
-
+import ScrollText from "../ScrollText/ScrollText";
 
 const drawerWidth = 240;
 
@@ -104,6 +105,10 @@ export default function MiniDrawer(props) {
     const [rowKebab, setRowKebab] = React.useState([]);
     const [active, setActive] = React.useState(2)
     const [fakeData, setFakeData] = React.useState([])
+    const [errorList, setErrorList] = React.useState([])
+    const [errList, setErrList] = React.useState([])
+    const [backgroundColor, setBackgroundColor] = React.useState(undefined)
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -111,21 +116,6 @@ export default function MiniDrawer(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    // useEffect(() => {
-    //     if (props.kebabData) {
-    //         // console.log(props.kebabData)
-    //         // let keys = Object.keys(props.kebabData).reverse()
-    //         let keys = Object.keys(props.kebabData).slice(props.activeRow - 2, 3 + props.activeRow).reverse()
-    //         // if (keys.length < 5) {
-    //         // const length = 5 - keys.length
-    //         // for (let i = 1; i < 6; i++) {
-    //         //     keys.push(i.toString())
-    //         // }
-    //         // }
-    //         // console.log(keys)
-    //         setRowKebab(keys)
-    //     }
-    // }, [props.kebabData, props.activeRow])
 
     const makeFakeData = (num) => {
         const f = (i) =>{
@@ -151,12 +141,19 @@ export default function MiniDrawer(props) {
 
 
     }
-
+    useEffect(() => {
+        let arr = []
+        console.log('arr',errorList)
+        for (let elem of errorList) {
+            arr.push(elem.err)
+        }
+        setErrList(arr)
+    }, [errorList])
 
     useEffect(() => {
-        console.log(props.kebabData, 'kebabData')
+        // console.log(props.kebabData, 'kebabData')
         makeFakeData(10)
-        console.log(fakeData,'fake data')
+        // console.log(fakeData,'fake data')
     },[props.kebabData])
     const upRow = () => {
         let x = props.activeRow
@@ -198,11 +195,18 @@ export default function MiniDrawer(props) {
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: open,
                 })}
+                style={{backgroundColor:backgroundColor, zIndex:11100}}
             >
                 <Toolbar>
                     <Typography variant="h6" noWrap>
-                        Tutaj nazwa
+                        RB 2.4Y.F
                     </Typography>
+                    {/*<Typography variant="h6" noWrap>*/}
+                        <div  style={{width:500, marginLeft:100}}>
+
+                            {errList.length>0&&<ScrollText text={errList}></ScrollText>}
+                        </div>
+                    {/*</Typography>*/}
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -233,15 +237,15 @@ export default function MiniDrawer(props) {
 
                         </ListItem>
                     </Link>
-                    <Link to='/orderlist' className='link'>
+                    {/*<Link to='/orderlist' className='link'>*/}
 
-                        <ListItem button>
+                    {/*    <ListItem button>*/}
 
-                            <ListItemIcon><FormatListBulletedIcon color="primary"/></ListItemIcon>
-                            <ListItemText/>
+                    {/*        <ListItemIcon><FormatListBulletedIcon color="primary"/></ListItemIcon>*/}
+                    {/*        <ListItemText/>*/}
 
-                        </ListItem>
-                    </Link>
+                    {/*    </ListItem>*/}
+                    {/*</Link>*/}
 
                     <Link to='/kebab' className='link'>
                         <ListItem button>
@@ -253,15 +257,7 @@ export default function MiniDrawer(props) {
                         </ListItem>
                     </Link>
                 </List>
-                <Divider/>
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-                            <ListItemText primary={text}/>
-                        </ListItem>
-                    ))}
-                </List>
+
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar}/>
@@ -270,6 +266,8 @@ export default function MiniDrawer(props) {
                         <Main
                             stat={props.stat}
                             socketAct={props.socketAct}
+                            setBackgroundColor={setBackgroundColor}
+                            setErrorList={setErrorList}
                         />
                     </Route>
                     <Route path='/orderlist'>
@@ -280,8 +278,8 @@ export default function MiniDrawer(props) {
                         <Kebab
                             details={details}
                             setDetails={setDetails}
-                            // kebabData={props.kebabData}
-                            kebabData={fakeData}
+                            kebabData={props.kebabData}
+                            // kebabData={fakeData}
                             activeRow={props.activeRow}
                             setActiveRow={props.setActiveRow}
                         />

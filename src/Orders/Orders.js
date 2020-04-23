@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import dict from '../dictionary'
 import  './Orders.scss'
 export default function Orders(props) {
-    console.log(props.data)
+    // console.log(props.data)
     return (
         <div style={{width: "100%"}}>
             <div>
@@ -13,17 +13,21 @@ export default function Orders(props) {
 
 
                 <tr >
-                    <th>Typ zlecenia</th>
+                    <th>Typ</th>
                     <th>Nazwa</th>
                     <th>Status</th>
+                    <th>Klient</th>
+                    <th>Poziom</th>
                     <th>Data następnej akcji</th>
-                    <th>Czas do</th>
+                    <th>Przewidywany czas</th>
                 </tr>
                 {props.data && props.data.map((elem,i) =>
                     <tr key={i} style={{background:elem.In_Process?'#9ee0fb': undefined}}>
                         <td>{dict.orderType[elem.OrderType]}</td>
                         <td>{elem.Name}</td>
                         <td>{dict.robotStat[elem.Status]}</td>
+                        <td></td>
+                        <td></td>
                         <td>{elem.date}</td>
                         <td>{elem.timeDesc}</td>
                     </tr>

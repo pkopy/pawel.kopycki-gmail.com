@@ -1,6 +1,6 @@
 export default {
     robotErr: {
-        1: 'Błąd ogólny na plc',
+        1: 'Błąd ogólny sterownika',
         2: 'Błąd otwartych drzwiczek',
         3: 'Błąd masy zero',
         4: 'Za duża różnica masy wzorca'
@@ -18,8 +18,13 @@ export default {
         5: 'Za dużą różnica masy wzorca',
         6: 'Kalibracja wagi',
         7: 'Ważenie wzorca masy',
-        8: 'Oczekiwanie na start zlecenia',
-        9: 'Zatrzymano zlecenie'
+        8: 'Oczekiwanie na start zlecenia (skanowanie)',
+        9: 'Zatrzymano zlecenie',
+        10: 'Oczekuje na ważenie 1',
+        11: 'Oczekuje na ważenie 2',
+        12: 'Oczekuje na ważenie 3',
+        13: 'Zakończone',
+        14: 'Przerwane'
     },
     orderStat: {
         0:'Oczekuje na realizacje',

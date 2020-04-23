@@ -205,9 +205,9 @@ export default function Kebab(props) {
             </div>
             {/*<button onClick={upRow}>UP</button>*/}
             {/*<button onClick={downRow}>DOWN</button>*/}
-            <p>active ROW= {props.activeRow +1 }</p>
-            <p>active={active}</p>
-            <p>length = {props.kebabData.length - 1}</p>
+            {/*<p>active ROW= {props.activeRow +1 }</p>*/}
+            {/*<p>active={active}</p>*/}
+            {/*<p>length = {props.kebabData.length - 1}</p>*/}
         </div>
     )
 }

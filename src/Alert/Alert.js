@@ -27,6 +27,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Alert(props) {
+    console.log('props:', props)
     const [open, setOpen] = React.useState(false);
     const [buttonOK, setButtonOK] = React.useState(true)
     const handleClickOpen = () => {
@@ -64,11 +65,13 @@ export default function Alert(props) {
         // setChecked(newChecked);
     },[props.doors])
     return (
-        <div>
+        <div className="moddal" style={{position: 'fixed', top:65}}>
             {/*<Button variant="outlined" color="primary" onClick={handleClickOpen}>*/}
             {/*    Open alert dialog*/}
             {/*</Button>*/}
+
             <Dialog
+
                 open={true}
                 onClose={handleClose}
                 fullWidth={true}
