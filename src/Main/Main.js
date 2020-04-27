@@ -65,7 +65,7 @@ const errorsDetails = {
     GErrFull: {
         err: 'Nieoczekiwana obecność filtra',
         title: 'Nieoczekiwana obecność filtra',
-        items: ['Usuń filtr z ramienia podejnika']
+        items: ['Usuń filtr z ramienia podajnika']
     },
 
     GMassErr: {
@@ -180,13 +180,6 @@ export default function Main(props) {
         <div className={classes.root}>
             <Grid container spacing={3}>
 
-                {/*<Grid item xs={12} sm={6}>*/}
-                {/*    <Paper className={classes.paper}>xs=12 sm=9</Paper>*/}
-                {/*</Grid>*/}
-                {/*<Grid item xs={12} sm={6}>*/}
-                {/*    <Paper className={classes.paper}>xs=12 sm=9</Paper>*/}
-                {/*</Grid>*/}
-
                 {props.stat.Main_Error && errors > 0 &&<Alert
                     title={'Błąd'}
                     // list={['Filtry są na swoich miejscach', 'Drzwiczki są zamknięte', 'Brak obiektów trzecich w komorze', 'Wyłącznik awaryjny jest wyciśnięty']}
@@ -195,51 +188,24 @@ export default function Main(props) {
                     errors={errors}
                     doors={props.stat.Main_Error.GStatMd}
                 />}
-                {/*<Grid item xs={12} md={6} xl={3}>*/}
-                {/*    <Paper className={classes.paper}*/}
-                {/*           style={{height: 400, backgroundColor: backgroundStatus}}>*/}
-                {/*        /!*backgroundImage:props.stat.Main_Error?'linear-gradient(141deg, #b33838 0%, #db1f4a 51%, #f32727 75%':undefined*!/*/}
-                {/*        <h2 style={{fontSize: '2em'}}>STATUS:</h2>*/}
-
-                {/*        /!*<h3>Rodzaj filtra:</h3>*!/*/}
-                {/*        <h3>{filter}</h3>*/}
-                {/*        /!*<h3>{robotStatus}</h3>*!/*/}
-                {/*        {backgroundStatus && <h3>Błąd: </h3>}*/}
-                {/*        {props.stat.Main_Error && props.stat.Main_Error.GStatErr !== 0 &&*/}
-                {/*        <p>Błąd ogólny sterownika </p>}*/}
-                {/*        {props.stat.Main_Error && props.stat.Main_Error.GStatMd !== 0 &&*/}
-                {/*        <p>Błąd otwartych drzwiczek </p>}*/}
-                {/*        {props.stat.Main_Error && props.stat.Main_Error.GMassErr !== 0 &&*/}
-                {/*        <p>Błąd masy zero</p>}*/}
-                {/*        {props.stat.Main_Error && props.stat.Main_Error.GReferenceErr !== 0 &&*/}
-                {/*        <p>Za duża różnica masy wzorca</p>}*/}
-                {/*        {props.stat.Main_Error && props.stat.Main_Error.GErrFull !== 0 &&*/}
-                {/*        <p>Nieoczekiwana obecność filtra</p>}*/}
-                {/*        {props.stat.Main_Error && props.stat.Main_Error.GErrEmpty !== 0 &&*/}
-                {/*        <p>Nieoczekiwany brak filtra</p>}*/}
-
-
-
-                {/*        {props.stat.Main_Error && errors > 1 &&<Alert*/}
-                {/*            title={'Błąd'}*/}
-                {/*            // list={['Filtry są na swoich miejscach', 'Drzwiczki są zamknięte', 'Brak obiektów trzecich w komorze', 'Wyłącznik awaryjny jest wyciśnięty']}*/}
-                {/*            list={list}*/}
-                {/*            click={sendReset}*/}
-                {/*            errors={errors}*/}
-                {/*            doors={props.stat.Main_Error.GStatMd}*/}
-                {/*        />}*/}
-
-                {/*    </Paper>*/}
-                {/*</Grid>*/}
                 <Grid item xs={12} md={3} xl={3}>
                     <Paper className={classes.paper} style={{height: 400}}>
 
                         <h2 style={{fontSize: '2em'}}>FILTR:</h2>
-                        <p style={{fontSize: '2em'}}>Numer
-                            filtra: {props.stat && props.stat.Qr > 0 ? props.stat.Qr : '--'}</p>
-                        <p style={{fontSize: '2em'}}>Masa
-                            filtra: {props.stat && props.stat.Mass > 0 ? props.stat.Mass : '--'}</p>
-                        <p style={{fontSize: '2em'}}>Położenie: {props.stat && props.stat.FilterInfo ? props.stat.FilterInfo : '--'}</p>
+                        <div style={{margin:'20px 0 0 0'}}>
+                            <p style={{fontSize: '2em', margin: 0, paddingTop: 10, borderTop: '1px dotted'}}>Numer filtra: </p>
+                            <p style={{fontSize: '2em', margin: 0}}><b>{props.stat && props.stat.Qr > 0 ? props.stat.Qr : '--'}</b></p>
+                        </div>
+                        <div >
+
+                            <p style={{fontSize: '2em', margin: 0, paddingTop: 10, borderTop: '1px dotted'}}>Masa filtra: </p>
+                            <p style={{fontSize: '2em', margin: 0}}><b>{props.stat && props.stat.Mass > 0 ? props.stat.Mass : '--'}</b></p>
+                        </div>
+                        <div >
+
+                            <p style={{fontSize: '2em', margin: 0, paddingTop: 10, borderTop: '1px dotted'}}>Położenie: </p>
+                            <p style={{fontSize: '2em', margin: 0, borderBottom: '1px dotted'}}><b>{props.stat && props.stat.FilterInfo ? props.stat.FilterInfo : '--'}</b></p>
+                        </div>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={9} xl={9}>
@@ -254,8 +220,8 @@ export default function Main(props) {
 
                 <Grid item xs={12} md={3} xl={3}>
                     <Paper className={classes.paper} style={{height: 400}}>
-                        <h2 style={{fontSize: '2em'}}>WARUNKI ŚRODOWISKOWE:</h2>
-                        <div style={{display: "flex"}}>
+                        <h2 style={{fontSize: '1.8em'}}>WARUNKI ŚRODOWISKOWE:</h2>
+                        <div style={{display: "flex", borderTop: '1px dotted', margin:'20px 0 0 0'}}>
                             <div style={{width: '90%', fontSize: '2em'}}>
                                 <p>Temperatura: <b>{temp} °C</b></p>
                             </div>
@@ -265,7 +231,7 @@ export default function Main(props) {
                                 {temp<19 && <img src={lowArrow} width={50}/>}
                             </div>
                         </div>
-                        <div style={{display: "flex"}}>
+                        <div style={{display: "flex", borderTop: '1px dotted'}}>
                             <div style={{width: '90%', fontSize: '2em'}}>
                                 <p>Wilgotność: <b>{humidity} %</b></p>
                             </div>
@@ -275,7 +241,7 @@ export default function Main(props) {
                                 {humidity < step && <img src={lowArrow} width={50}/>}
                             </div>
                         </div>
-                        <div style={{display: "flex"}}>
+                        <div style={{display: "flex", borderTop: '1px dotted', borderBottom: '1px dotted'}}>
                             <div style={{width: '90%', fontSize: '2em'}}>
 
                                 <p>Ciśnienie: <b>{pressure} hPa</b></p>
@@ -296,15 +262,12 @@ export default function Main(props) {
                     {/*<Paper className={props.stat.Main_Error ? 'errorDiv' : classes.paper}*/}
                     <Paper className={classes.paper}
                            style={{minHeight: 400, color: 'rgba(0, 0, 0, 0.54)'}}>
-                        {/*<h1>Nazwa zlecenia: {props.stat && props.stat.Order_Name}</h1>*/}
-                        {/*<h2>Opis: </h2><p>{props.stat && props.stat.Order_Desc}</p>*/}
-                        {/*<img src={cos} width={48}/>*/}
                         <Chart
                             stat={props.stat}
                         />
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={6} xl={3}>
+                <Grid item xs={12} md={3} xl={3}>
                     <Paper className={classes.paper} style={{height: 400}}>
                         <div style={{display: "flex"}}>
 

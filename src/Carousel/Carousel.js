@@ -23,6 +23,7 @@ export default function ListPanel(props) {
         setCurrentImage(x);
         figure.current.style.transform = `rotateY(${y * -theta}rad)`;
         props.setDetails(props.data[x]);
+
     };
     const details = () => {
         // console.log(props.data[currImage])
@@ -40,8 +41,16 @@ export default function ListPanel(props) {
     // });
     useEffect(() =>{
         props.setCarousel(figure)
+        // props.setDetails(props.data[props.activeRow])
     },[props.active])
-
+    // useEffect(() =>{
+    //
+    //     setTimeout(() => {
+    //         props.setDetails(props.data[props.activeRow])
+    //         }, 3000
+    //
+    //     )
+    // },[])
     return (
         <>
             {props.children}
@@ -49,18 +58,18 @@ export default function ListPanel(props) {
                 <div >
                     {props.test}
                 </div>
-                {props.active&&<div style={{position:"absolute", left:1150}}>
-                    <DisplayRow number={currImage + 1}/>
-                </div>}
+                {/*{props.active&&<div style={{position:"absolute", left:1150}}>*/}
+                {/*    <DisplayRow number={currImage + 1}/>*/}
+                {/*</div>}*/}
                 <figure ref={figure}>
                     {props.data && props.data.map((elem, i) =>
-                        <div key={i} onClick={()=>setData(200)}>
+                        <div key={i} onClick={()=>setData(200)} style={{margin:2}}>
                             {elem.FilterIndex&&<div className={'cont'}
                                  style={{padding:5,height: props.height, opacity: props.opacity, background: elem.Status === 8?'#ff5b5b':props.background, zIndex:50, color: props.active?'#fff':'#535A80',transition: '.5s'}}
                                  onClick={() => console.log(elem)}>
 
-                                <p>Filter index: {elem.FilterIndex}</p>
-                                {props.active&&<p>Disk Index: {elem.DiskIndex}</p>}
+                                {<p>Disk Index: {elem.DiskIndex}</p>}
+                                {props.active&&<p>Filter index: {elem.FilterIndex}</p>}
                                 {props.active&&<p>QRCODE: {elem.QRCode}</p>}
                                 {props.active&&<p>Last Mass: {elem.LastMass}</p>}
                                 {props.active&&<p>Status: {elem.Status}</p>}
@@ -96,7 +105,7 @@ export default function ListPanel(props) {
                 {/*    {props.data[0].DiskIndex}/{currImage}*/}
                 {/*</div>}*/}
 
-            {props.active&&<div style={{position:"fixed", bottom:150, height:100, width:'100%', zIndex:10}}>
+            {props.active&&<div style={{position:"fixed", bottom:250, height:100, width:'100%', zIndex:10}}>
                 <div style={{width:1050,marginLeft:"auto", marginRight:"auto", position:"relative",}}>
                     {props.active&&<div style={{width:100}} onClick={clickButton}>
                         <img src={kolo} width='100px' style={{transform:'rotate(90deg)'}}/>

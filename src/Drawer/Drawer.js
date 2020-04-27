@@ -130,15 +130,15 @@ export default function MiniDrawer(props) {
         }
         let data =[]
         for (let i = 0; i < num; i++) {
-            if (props.kebabData[18]) {
+            // if (props.kebabData[18]) {
 
                let x =  f(i)
                 data.push(x)
-            }
+            // }
 
         }
         setFakeData(data)
-
+        console.log('data', fakeData)
 
     }
     useEffect(() => {
@@ -152,9 +152,10 @@ export default function MiniDrawer(props) {
 
     useEffect(() => {
         // console.log(props.kebabData, 'kebabData')
-        makeFakeData(10)
+        makeFakeData(11)
+
         // console.log(fakeData,'fake data')
-    },[props.kebabData])
+    },[props.stat])
     const upRow = () => {
         let x = props.activeRow
         if (active > 2) {
@@ -199,7 +200,7 @@ export default function MiniDrawer(props) {
             >
                 <Toolbar>
                     <Typography variant="h6" noWrap>
-                        RB 2.4Y.F
+                        <b>RB 2.4Y.F</b>
                     </Typography>
                     {/*<Typography variant="h6" noWrap>*/}
                         <div  style={{width:500, marginLeft:100}}>
@@ -278,8 +279,8 @@ export default function MiniDrawer(props) {
                         <Kebab
                             details={details}
                             setDetails={setDetails}
-                            kebabData={props.kebabData}
-                            // kebabData={fakeData}
+                            // kebabData={props.kebabData}
+                            kebabData={fakeData}
                             activeRow={props.activeRow}
                             setActiveRow={props.setActiveRow}
                         />

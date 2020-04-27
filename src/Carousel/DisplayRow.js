@@ -63,13 +63,13 @@ export default function (props) {
 
             {/*<button onClick={() => setOpa(0)}>iiii</button>*/}
             <div style={{
-                fontSize: '15em', position: "absolute", left: 280, overflow: 'hidden',
+                fontSize: '15em', position: "absolute", left: 10, overflow: 'hidden',
 
                 // border: '1px solid',
                 width: 250,
                 height: 200
             }}>
-                <div style={{top: height, opacity: opa, position: 'absolute', transition: '.2s', visibility: vis}}>
+                <div style={{textShadow: '2px 2px 5px #999aa5', top: height, opacity: opa, position: 'absolute', transition: '.2s', visibility: vis}}>
                     {number}
                     {props.children}
                     {/*{prevNumber}*/}

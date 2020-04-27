@@ -16,16 +16,22 @@ export default function Kebab(props) {
             let keys = Object.keys(props.kebabData);
             // setRowKebab(keys.slice(0,5).reverse());
 
-            if (init &&props.kebabData.length > 0)  {
+            if (init && props.kebabData.length > 0) {
                 let x = props.kebabData
                 if (props.kebabData.length < 5) {
-                    x.push([{Status:8}])
+                    for (let i = 0; i <= 5 - (props.kebabData.length - 1); i++) {
+
+                        x.push([{}])
+                    }
+                    setActive(4)
+                    props.setActiveRow(0)
                 }
                 let keys = Object.keys(x);
-                setRowKebab(keys.slice(0,5).reverse());
+                console.log(x, 'down')
+                setRowKebab(keys.slice(0, 5).reverse());
                 setInit(false)
             }
-            if (props.activeRow > 4)  {
+            if (props.activeRow > 4) {
                 // setRowKebab(keys.slice().reverse());
             }
             // let data =
@@ -55,64 +61,44 @@ export default function Kebab(props) {
         console.log(active, change, props.activeRow, 'down up')
         // console.log(carousel)
 
-        carousel.current.style.height='red'
-        if(active > 0) {
-            setActive(active-1)
+        carousel.current.style.height = 'red'
+        if (active > 0) {
+            setActive(active - 1)
             props.setActiveRow(props.activeRow + 1)
         }
-        if (active === 0 && props.activeRow < props.kebabData.length-1)  {
+        if (active === 0 && props.activeRow < props.kebabData.length - 1) {
             // setChange(!change)
             let keys = Object.keys(props.kebabData);
-            setRowKebab(keys.slice(props.activeRow - 3, props.activeRow+2).reverse());
+            setRowKebab(keys.slice(props.activeRow - 3, props.activeRow + 2).reverse());
             props.setActiveRow(props.activeRow + 1)
             setActive(0)
-            console.log(rowKebab, 'down')
+            console.log(rowKebab, 'up')
         }
-        // if (active > 2) {
-        //     setActive(active - 1)
-        // } else if (x < rowKebab.length - 1 ) {
-        //
-        //         // if (six) {
-        //         //
-        //         //     props.setActiveRow(props.activeRow + 2)
-        //         //     setActive(active - 1)
-        //         // } else {
-        //
-        //             props.setActiveRow(props.activeRow + 1)
-        //         // }
-        //
-        //     // setActive(active + 1)
-        // } else if (active > 0) {
-        //     // //     props.setKebabData(props.kebabData)
-        //     //     console.log(active)
-        //     setActive(active - 1)
-        // }
 
-        // console.log(props.activeRow)
-        // console.log(activeRow)
     }
     const downRow = () => {
+        console.log(props.details, 'det')
         setChange(!change)
-        console.log(active, change, props.activeRow, props.kebabData.length,'down')
-        if (active < rowKebab.length-1) {
+        console.log(active, change, props.activeRow, props.kebabData.length, 'down')
+        if (active < rowKebab.length - 1) {
             setActive(active + 1)
-            props.activeRow === props.kebabData.length-1?props.setActiveRow(props.activeRow - 1):props.setActiveRow(props.activeRow - 1)
+            props.activeRow === props.kebabData.length - 1 ? props.setActiveRow(props.activeRow - 1) : props.setActiveRow(props.activeRow - 1)
         }
-        if (props.activeRow === props.kebabData.length-1) {
+        if (props.activeRow === props.kebabData.length - 1) {
             props.setActiveRow(props.activeRow - 1)
         }
-        if (active === 4 && props.activeRow > 0)  {
+        if (active === 4 && props.activeRow > 0) {
             // setChange(!change)
             let keys = Object.keys(props.kebabData);
-            console.log((keys.slice(props.activeRow-1, props.activeRow+4).reverse()), 'down key')
-            setRowKebab(keys.slice(props.activeRow-1, props.activeRow+4).reverse());
-            props.setActiveRow(props.activeRow -1)
-            // setActive(0)
+            console.log((keys.slice(props.activeRow - 1, props.activeRow + 4).reverse()), 'down key')
+            setRowKebab(keys.slice(props.activeRow - 1, props.activeRow + 4).reverse());
+            props.setActiveRow(props.activeRow - 1)
+            setActive(4)
             console.log(rowKebab, 'down')
         }
-        if (active === props.kebabData.length-3) {
-            props.setActiveRow(0)
-        }
+        // if (active === props.kebabData.length - 3) {
+        //     props.setActiveRow(0)
+        // }
         // if (active < 2) {
         //     setActive(active + 1)
         //     // props.setActiveRow(props.activeRow - 1)
@@ -134,80 +120,123 @@ export default function Kebab(props) {
         // console.log(props.activeRow)
         // console.log(active, change, props.activeRow, 'down =')
     }
-
+    // useEffect(() =>{
+    //     props.setDetails([props.activeRow])
+    // },[props.stat])
     return (
         <div>
-        <div className="contener">
-            <div
-                style={{width:850, height:100, background:'#6BB336', marginLeft:"auto", marginRight:"auto",
-                    border:"3px solid #535A80", borderRadius:'50%', position:'relative', top:70
-                }}
+            {props.kebabData && props.kebabData.length > 0 && <div className="contener">
+                <div
+                    style={{
+                        width: 850, height: 100, background: '#c4d6b7', marginLeft: "auto", marginRight: "auto",
+                        border: "3px solid #535A80", borderRadius: '50%', position: 'relative', top: 70
+                    }}
 
-            />
+                />
 
 
-            {rowKebab && rowKebab.map((elem, ind) => {
-                    let newData = []
-                // console.log(elem)
-                    for (let i = 0; i < 15; i++) {
-                        if (props.kebabData[elem] && props.kebabData[elem][i]) {
-                            // console.log(props.data[i])
-                            newData.push(props.kebabData[elem][i])
-                        } else {
-                            newData.push({})
+                {rowKebab && rowKebab.map((elem, ind) => {
+                        let newData = []
+                        // console.log(elem)
+
+                        for (let i = 0; i < 15; i++) {
+                            if (props.kebabData[elem] && props.kebabData[elem][i]) {
+                                // console.log(props.data[i])
+                                newData.push(props.kebabData[elem][i])
+                            } else {
+                                newData.push({})
+                            }
                         }
+                        // console.log(newData, 'new')
+                        // props.setDetails(newData[props.activeRow])
+                        return (
+                            <div key={ind}>
+                                {ind === active && <Carousel
+                                    data={newData}
+
+                                    setCarousel={setCarousel}
+                                    height={200}
+                                    opacity={0.95}
+                                    background={'#5972FF'}
+                                    zIndex={2}
+                                    active={true}
+                                    activeRow={props.activeRow}
+                                    setDetails={props.setDetails}
+                                    change={change}
+                                    // test={<DisplayRow number={newData[0].DiskIndex}/>}
+                                >
+
+                                    {/*<p>{newData[0].DiskIndex}</p>*/}
+                                </Carousel>}
+                                {ind !== active && (ind + props.activeRow) % 2 === 0 && <Carousel
+                                    data={newData}
+                                    // opacity={0.8}
+                                    // setHeight={setHeight}
+                                    change={change}
+                                    setCarousel={setCarousel}
+                                    background={'#A6B3FF'}
+                                    active={false}
+                                    zIndex={ind > active ? -ind : ind}
+                                    setDetails={props.setDetails}
+                                />}
+                                {ind !== active && (props.activeRow + ind) % 2 !== 0 && <Carousel
+                                    data={newData}
+                                    // opacity={0.8}
+                                    // setHeight={setHeight}
+                                    change={change}
+                                    setCarousel={setCarousel}
+                                    background={'#91a0f7'}
+                                    active={false}
+                                    zIndex={ind > active ? -ind : ind}
+                                    setDetails={props.setDetails}
+                                />}
+                                {/*<div style={{height:5}}> </div>*/}
+                            </div>
+
+                        )
                     }
-                    return (
-                        <div key={ind} >
-                            {ind === active && <Carousel
-                                data={newData}
+                )}
+                <div style={{
+                    width: 850,
+                    height: 100,
+                    background: '#c4d6b7',
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    border: "3px solid #535A80",
+                    borderRadius: '50%',
+                    position: 'relative',
+                    top: -70,
+                    zIndex: -10
+                }}/>
 
-                                setCarousel={setCarousel}
-                                height={200}
-                                opacity={0.95}
-                                background={'#5972FF'}
-                                zIndex={2}
-                                active={true}
-                                setDetails={props.setDetails}
-                                change={change}
-                                test={<DisplayRow number={newData[0].DiskIndex}/>}
-                            >
-
-                                {/*<p>{newData[0].DiskIndex}</p>*/}
-                            </Carousel>}
-                            {ind !== active && <Carousel
-                                data={newData}
-                                // opacity={0.8}
-                                // setHeight={setHeight}
-                                change={change}
-                                setCarousel={setCarousel}
-                                background={'#A6B3FF'}
-                                active={false}
-                                zIndex={ind > active ? -ind : ind}
-                                setDetails={props.setDetails}
-                            />}
-                            {/*<div style={{height:5}}> </div>*/}
-                        </div>
-
-                    )
-                }
-            )}
-            <div style={{width:850, height:100, background:'#6BB336', marginLeft:"auto", marginRight:"auto", border:"3px solid #535A80", borderRadius:'50%', position:'relative', top:-70, zIndex:-10}}/>
-
-        </div>
-            <div style={{width:200,marginLeft:"auto", marginRight:"auto", position:"relative",}}>
-                <div style={{width:100}} onClick={upRow}>
-                    <img src={kolo} width='100px' style={{transform:'rotate(180deg)'}}/>
+            </div>}
+            {rowKebab && rowKebab.length > 0 &&
+            <div style={{width: 200, marginLeft: "auto", marginRight: "auto", position: "relative",}}>
+                <div style={{width: 100}} onClick={upRow}>
+                    <img src={kolo} width='100px' style={{transform: 'rotate(180deg)'}}/>
                 </div>
-                <div style={{width:100, position:"absolute", right:0, top:0}} onClick={downRow}>
+                <div style={{width: 100, position: "absolute", right: 0, top: 0}} onClick={downRow}>
                     <img src={kolo} width='100px'/>
                 </div>
+            </div>}
+            {rowKebab && rowKebab.length > 0 && <div style={{height: 250, position: "absolute", top: 100}}>
+                POZIOM:
+                {props.activeRow >= 0 && <DisplayRow number={props.activeRow + 1}/>}
+            </div>}
+            {rowKebab && rowKebab.length > 0 && <div style={{height: 250, position: "absolute", top: 100, right: 200,}}>
+                POZYCJA:
+                {props.details && props.details.FilterIndex && <DisplayRow number={props.details.FilterIndex}/>}
+                {!props.details && <DisplayRow number={1}/>}
+            </div>}
+            <div style={{width: 250, height: 350, border: '1px solid', position:'absolute', top: 350}}>
+                {props.details && <p>Filtr: {props.details.FilterIndex}</p>}
+                {props.details && <p>Poziom: {props.details.DiskIndex}</p>}
             </div>
             {/*<button onClick={upRow}>UP</button>*/}
             {/*<button onClick={downRow}>DOWN</button>*/}
-            {/*<p>active ROW= {props.activeRow +1 }</p>*/}
-            {/*<p>active={active}</p>*/}
-            {/*<p>length = {props.kebabData.length - 1}</p>*/}
+            <p>active ROW= {props.activeRow}</p>
+            <p>active={active}</p>
+            <p>length = {props.kebabData.length}</p>
         </div>
     )
 }

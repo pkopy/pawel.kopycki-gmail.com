@@ -18,16 +18,16 @@ export default function Orders(props) {
                     <th>Status</th>
                     <th>Klient</th>
                     <th>Poziom</th>
-                    <th>Data następnej akcji</th>
-                    <th>Przewidywany czas</th>
+                    <th style={{width:'15%'}}>Data następnej akcji</th>
+                    <th style={{width:'15%'}}>Przewidywany czas</th>
                 </tr>
                 {props.data && props.data.map((elem,i) =>
                     <tr key={i} style={{background:elem.In_Process?'#9ee0fb': undefined}}>
                         <td>{dict.orderType[elem.OrderType]}</td>
                         <td>{elem.Name}</td>
                         <td>{dict.robotStat[elem.Status]}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{elem.Customer_Name}</td>
+                        <td style={{textAlign: 'center'}}>{elem.Disks}</td>
                         <td>{elem.date}</td>
                         <td>{elem.timeDesc}</td>
                     </tr>
