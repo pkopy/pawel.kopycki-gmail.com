@@ -9,32 +9,50 @@ export default function MyChart(props) {
     const [temp2, setTemp2] = useState([]);
     const [humidity1, setHumidity1] = useState([]);
     const [humidity2, setHumidity2] = useState([]);
+    const [labels, setLabels] = useState([]);
 
+    const roundMinutes = (date) => {
+        date.setHours(date.getHours() + Math.round(date.getMinutes()/60));
+        date.setMinutes(0, 0, 0); // Resets also seconds and milliseconds
+
+        return `${date.getHours()}:00`;
+    }
     useEffect(() => {
         let temp1 = [];
         let temp2 = [];
         let humidity1 = [];
         let humidity2 = [];
+        let labels1 = [];
 
         if (props.stat && props.stat.THB) {
             // console.log(props.stat.THB.LastDayAvg)
+            const date = new Date()
+            labels1.push(`${date.getHours() + 1}:00`)
             for (let elem of props.stat.THB.LastDayAvg) {
+                const date = new Date(elem.date);
+                console.log(props.stat.THB.LastDayAvg.date)
+                labels1.push(roundMinutes(date))
                 temp1.push(elem.temperature1)
                 temp2.push(elem.temperature2)
                 humidity1.push(elem.humidity1)
                 humidity2.push(elem.humidity2)
             }
-        }
 
-        setTemp1(temp1);
-        setTemp2(temp2);
-        setHumidity1(humidity1);
-        setHumidity2(humidity2);
+
+
+
+        }
+        setLabels(labels1.reverse())
+        setTemp1(temp1.reverse());
+        setTemp2(temp2.reverse());
+        setHumidity1(humidity1.reverse());
+        setHumidity2(humidity2.reverse());
 
     }, [props.stat])
     const data = {
         // labels: ['Temp'],
-        labels: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
+        // labels: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
+        labels:labels,
         datasets: [
             // {
             //     label: 'max',
@@ -114,6 +132,11 @@ export default function MyChart(props) {
                                   id: 'first-y-axis',
                                   type: 'linear',
                                   position: 'left',
+                                  scaleLabel: {
+                                      display: true,
+                                      labelString: 'Temperatura',
+                                  },
+
                                   ticks: {
                                       min: 18,
                                       max: 22
@@ -123,6 +146,10 @@ export default function MyChart(props) {
                                       id: 'second-y-axis',
                                       type: 'linear',
                                       position: 'right',
+                                      scaleLabel: {
+                                          display: true,
+                                          labelString: 'Wilgotność',
+                                      },
                                       ticks: {
                                           min: 44,
                                           max: 51

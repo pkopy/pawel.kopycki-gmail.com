@@ -9,6 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import AppsIcon from '@material-ui/icons/Apps';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -152,7 +153,7 @@ export default function MiniDrawer(props) {
 
     useEffect(() => {
         // console.log(props.kebabData, 'kebabData')
-        makeFakeData(11)
+        makeFakeData(5)
 
         // console.log(fakeData,'fake data')
     },[props.stat])
@@ -252,7 +253,7 @@ export default function MiniDrawer(props) {
                         <ListItem button>
 
                             {/*<ListItemIcon><InboxIcon color="primary"/></ListItemIcon>*/}
-                            <ListItemIcon><img src={kolo} width={30}/></ListItemIcon>
+                            <ListItemIcon><AppsIcon color='primary'/></ListItemIcon>
                             <ListItemText/>
 
                         </ListItem>
@@ -269,6 +270,8 @@ export default function MiniDrawer(props) {
                             socketAct={props.socketAct}
                             setBackgroundColor={setBackgroundColor}
                             setErrorList={setErrorList}
+                            setDetails={setDetails}
+                            setActiveRow={props.setActiveRow}
                         />
                     </Route>
                     <Route path='/orderlist'>

@@ -168,13 +168,22 @@ export default function Main(props) {
             }
         }
     }, [props.stat])
-    // useEffect(() => {
-    //     setRobotStatus(robotStat[props.stat.Robot_Status])
-    // }, [props.stat.Robot_Status]);
+    useEffect(() => {
+        props.setDetails({})
+        props.setActiveRow(2)
+
+        return (() => {
+            props.setDetails({})
+            props.setActiveRow(2)
+        })
+    }, []);
     const {Time} = props.stat
     const sendReset = () => {
+        console.log('reset')
         props.socketAct.send(JSON.stringify({"RBT_CMD": "RESET"}))
     }
+
+
     // console.log(Time)
     return (
         <div className={classes.root}>
@@ -220,12 +229,12 @@ export default function Main(props) {
 
                 <Grid item xs={12} md={3} xl={3}>
                     <Paper className={classes.paper} style={{height: 400}}>
-                        <h2 style={{fontSize: '1.8em'}}>WARUNKI ŚRODOWISKOWE:</h2>
+                        <h2 className={'tit'}>WARUNKI ŚRODOWISKOWE:</h2>
                         <div style={{display: "flex", borderTop: '1px dotted', margin:'20px 0 0 0'}}>
                             <div style={{width: '90%', fontSize: '2em'}}>
-                                <p>Temperatura: <b>{temp} °C</b></p>
+                                <p className={'t1'}>Temperatura: <b>{temp} °C</b></p>
                             </div>
-                            <div style={{padding: '20px 5px'}} transform="translate 1s">
+                            <div className={'arrow'} transform="translate 1s">
                                 {temp <=21 && temp >= 19 && <img src={okArrow} width={50}/>}
                                 {temp >21 && <img src={hiArrow} width={50}/>}
                                 {temp<19 && <img src={lowArrow} width={50}/>}
@@ -233,9 +242,9 @@ export default function Main(props) {
                         </div>
                         <div style={{display: "flex", borderTop: '1px dotted'}}>
                             <div style={{width: '90%', fontSize: '2em'}}>
-                                <p>Wilgotność: <b>{humidity} %</b></p>
+                                <p className={'t1'}>Wilgotność: <b>{humidity} %</b></p>
                             </div>
-                            <div style={{padding: '20px 5px'}}>
+                            <div className={'arrow'} >
                                 {humidity <=50 && humidity >= 45 && <img src={okArrow} width={50}/>}
                                 {humidity > 50 && <img src={hiArrow} width={50}/>}
                                 {humidity < step && <img src={lowArrow} width={50}/>}
@@ -244,9 +253,9 @@ export default function Main(props) {
                         <div style={{display: "flex", borderTop: '1px dotted', borderBottom: '1px dotted'}}>
                             <div style={{width: '90%', fontSize: '2em'}}>
 
-                                <p>Ciśnienie: <b>{pressure} hPa</b></p>
+                                <p className={'t1'}>Ciśnienie: <b>{pressure} hPa</b></p>
                             </div>
-                            <div style={{padding: '20px 5px'}} onClick={send}>
+                            <div className={'arrow'}  onClick={send}>
 
 
                                 <img src={okArrow} width={50}/>
@@ -275,7 +284,7 @@ export default function Main(props) {
 
                         </div>
 
-                        <h2 style={{fontSize: "3em", textAlign:"center"}}>
+                        <h2 className={'time'}>
                             <DatePanel
                                 time={props.stat}
                             />

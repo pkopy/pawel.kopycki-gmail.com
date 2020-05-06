@@ -19,7 +19,7 @@ export default function Kebab(props) {
             if (init && props.kebabData.length > 0) {
                 let x = props.kebabData
                 if (props.kebabData.length < 5) {
-                    for (let i = 0; i <= 5 - (props.kebabData.length - 1); i++) {
+                    for (let i = 0; i < 6 - (props.kebabData.length-2); i++) {
 
                         x.push([{}])
                     }
@@ -168,7 +168,7 @@ export default function Kebab(props) {
 
                                     {/*<p>{newData[0].DiskIndex}</p>*/}
                                 </Carousel>}
-                                {ind !== active && (ind + props.activeRow) % 2 === 0 && <Carousel
+                                {ind !== active && (newData[0].DiskIndex) % 2 === 0 && <Carousel
                                     data={newData}
                                     // opacity={0.8}
                                     // setHeight={setHeight}
@@ -179,7 +179,7 @@ export default function Kebab(props) {
                                     zIndex={ind > active ? -ind : ind}
                                     setDetails={props.setDetails}
                                 />}
-                                {ind !== active && (props.activeRow + ind) % 2 !== 0 && <Carousel
+                                {ind !== active && (newData[0].DiskIndex) % 2 !== 0 && <Carousel
                                     data={newData}
                                     // opacity={0.8}
                                     // setHeight={setHeight}
@@ -220,23 +220,23 @@ export default function Kebab(props) {
                 </div>
             </div>}
             {rowKebab && rowKebab.length > 0 && <div style={{height: 250, position: "absolute", top: 100}}>
-                POZIOM:
+                <b style={{fontSize:'1.8em'}}>POZIOM:</b>
                 {props.activeRow >= 0 && <DisplayRow number={props.activeRow + 1}/>}
             </div>}
             {rowKebab && rowKebab.length > 0 && <div style={{height: 250, position: "absolute", top: 100, right: 200,}}>
-                POZYCJA:
-                {props.details && props.details.FilterIndex && <DisplayRow number={props.details.FilterIndex}/>}
-                {!props.details && <DisplayRow number={1}/>}
+                <b style={{fontSize:'1.8em'}}>POZYCJA:</b>
+                {props.details && props.details.FilterIndex ? <DisplayRow number={props.details.FilterIndex}/>:<DisplayRow number={1}/>}
+                {/*{!props.details && <DisplayRow number={1}/>}*/}
             </div>}
-            <div style={{width: 250, height: 350, border: '1px solid', position:'absolute', top: 350}}>
-                {props.details && <p>Filtr: {props.details.FilterIndex}</p>}
-                {props.details && <p>Poziom: {props.details.DiskIndex}</p>}
-            </div>
+            {/*<div style={{width: 250, height: 350, border: '1px solid', position:'absolute', top: 350}}>*/}
+            {/*    {props.details && <p>Filtr: {props.details.FilterIndex}</p>}*/}
+            {/*    {props.details && <p>Poziom: {props.details.DiskIndex}</p>}*/}
+            {/*</div>*/}
             {/*<button onClick={upRow}>UP</button>*/}
             {/*<button onClick={downRow}>DOWN</button>*/}
-            <p>active ROW= {props.activeRow}</p>
-            <p>active={active}</p>
-            <p>length = {props.kebabData.length}</p>
+            {/*<p>active ROW= {props.activeRow}</p>*/}
+            {/*<p>active={active}</p>*/}
+            {/*<p>length = {props.kebabData.length}</p>*/}
         </div>
     )
 }
