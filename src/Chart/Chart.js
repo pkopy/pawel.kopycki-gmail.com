@@ -97,7 +97,7 @@ export default function MyChart(props) {
                 label: 'Temperatura waga ',
                 type: 'line',
                 fill: false,
-                lineTension: 0.1,
+                // lineTension: 0.1,
                 pointRadius: 1,
                 // This binds the dataset to the left y axis
                 yAxisID: 'first-y-axis'
