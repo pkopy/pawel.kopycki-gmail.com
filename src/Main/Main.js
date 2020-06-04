@@ -5,8 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import './Main.scss'
 import DatePanel from "../Date/Date";
 import Alert from "../Alert/Alert";
-import icon from '../images/kolo.svg'
-import cos from '../images/ddd.png'
 import okArrow from '../images/okArrow.svg'
 import lowArrow from '../images/lowArrow.svg'
 import hiArrow from '../images/hiArrow.svg'
@@ -131,10 +129,6 @@ export default function Main(props) {
             }
 
         };
-        // setTimeout(thb, 5000);
-        // return () => {
-        //     // console.log('ccccc')
-        // }
 
     }, [props.stat])
     useEffect(() => {
@@ -177,7 +171,7 @@ export default function Main(props) {
             props.setActiveRow(2)
         })
     }, []);
-    const {Time} = props.stat
+
     const sendReset = () => {
         console.log('reset')
         props.socketAct.send(JSON.stringify({"RBT_CMD": "RESET"}))
@@ -202,7 +196,7 @@ export default function Main(props) {
 
                         <h2 style={{fontSize: '2em'}}>FILTR:</h2>
                         <div style={{margin:'20px 0 0 0'}}>
-                            <p style={{fontSize: '2em', margin: 0, paddingTop: 10, borderTop: '1px dotted'}}>Numer filtra: </p>
+                            <p style={{fontSize: '2em', margin: 0, paddingTop: 10, borderTop: '1px dotted'}}>Kod QR: </p>
                             <p style={{fontSize: '2em', margin: 0}}><b>{props.stat && props.stat.Qr > 0 ? props.stat.Qr : '--'}</b></p>
                         </div>
                         <div >
@@ -235,9 +229,9 @@ export default function Main(props) {
                                 <p className={'t1'}>Temperatura: <b>{temp} °C</b></p>
                             </div>
                             <div className={'arrow'} transform="translate 1s">
-                                {temp <=21 && temp >= 19 && <img src={okArrow} width={50}/>}
-                                {temp >21 && <img src={hiArrow} width={50}/>}
-                                {temp<19 && <img src={lowArrow} width={50}/>}
+                                {temp <=21 && temp >= 19 && <img src={okArrow} width={50} alt='arrow'/>}
+                                {temp >21 && <img src={hiArrow} width={50} alt='arrow'/>}
+                                {temp<19 && <img src={lowArrow} width={50} alt='arrow'/>}
                             </div>
                         </div>
                         <div style={{display: "flex", borderTop: '1px dotted'}}>
@@ -245,9 +239,9 @@ export default function Main(props) {
                                 <p className={'t1'}>Wilgotność: <b>{humidity} %</b></p>
                             </div>
                             <div className={'arrow'} >
-                                {humidity <=50 && humidity >= 45 && <img src={okArrow} width={50}/>}
-                                {humidity > 50 && <img src={hiArrow} width={50}/>}
-                                {humidity < step && <img src={lowArrow} width={50}/>}
+                                {humidity <=50 && humidity >= 45 && <img src={okArrow} width={50} alt='arrow'/>}
+                                {humidity > 50 && <img src={hiArrow} width={50} alt='arrow'/>}
+                                {humidity < step && <img src={lowArrow} width={50} alt='arrow'/>}
                             </div>
                         </div>
                         <div style={{display: "flex", borderTop: '1px dotted', borderBottom: '1px dotted'}}>
@@ -258,7 +252,7 @@ export default function Main(props) {
                             <div className={'arrow'}  onClick={send}>
 
 
-                                <img src={okArrow} width={50}/>
+                                <img src={okArrow} width={50} alt='arrow'/>
 
 
                             </div>
@@ -267,7 +261,7 @@ export default function Main(props) {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12} md={9} xl={6}>
+                <Grid item xs={12} md={9} xl={9}>
                     {/*<Paper className={props.stat.Main_Error ? 'errorDiv' : classes.paper}*/}
                     <Paper className={classes.paper}
                            style={{minHeight: 400, color: 'rgba(0, 0, 0, 0.54)'}}>
@@ -276,25 +270,34 @@ export default function Main(props) {
                         />
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={3} xl={3}>
-                    <Paper className={classes.paper} style={{height: 400}}>
-                        <div style={{display: "flex"}}>
+                {/*<Grid item xs={12} md={9} xl={9}>*/}
+                {/*    /!*<Paper className={props.stat.Main_Error ? 'errorDiv' : classes.paper}*!/*/}
+                {/*    <Paper className={classes.paper}*/}
+                {/*           style={{minHeight: 400, color: 'rgba(0, 0, 0, 0.54)'}}>*/}
+                {/*        <Chart*/}
+                {/*            stat={props.stat}*/}
+                {/*        />*/}
+                {/*    </Paper>*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={12} md={3} xl={3}>*/}
+                {/*    <Paper className={classes.paper} style={{height: 400}}>*/}
+                {/*        <div style={{display: "flex"}}>*/}
 
-                            <img src={clock} width={50}/>
+                {/*            <img src={clock} width={50} alt='clock'/>*/}
 
-                        </div>
+                {/*        </div>*/}
 
-                        <h2 className={'time'}>
-                            <DatePanel
-                                time={props.stat}
-                            />
-                        </h2>
+                {/*        <h2 className={'time'}>*/}
+                {/*            <DatePanel*/}
+                {/*                time={props.stat}*/}
+                {/*            />*/}
+                {/*        </h2>*/}
 
 
-                        {/*<p style={{fontSize: '1.2em'}}><b>Start zlecenia:</b> {Time && Time.Start_Time}</p>*/}
-                        {/*<h3>{Time && Time.Start_Time_Description}</h3>*/}
-                    </Paper>
-                </Grid>
+                {/*        /!*<p style={{fontSize: '1.2em'}}><b>Start zlecenia:</b> {Time && Time.Start_Time}</p>*!/*/}
+                {/*        /!*<h3>{Time && Time.Start_Time_Description}</h3>*!/*/}
+                {/*    </Paper>*/}
+                {/*</Grid>*/}
                 {/*<Grid item xs={12} xl={6}>*/}
                 {/*    /!*<Paper className={props.stat.Main_Error ? 'errorDiv' : classes.paper}*!/*/}
                 {/*    <Paper className={classes.paper}*/}

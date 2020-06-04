@@ -50,10 +50,19 @@
   .arrow {
     padding: 10px 5px;
   }
+   th.column{
+    font-size: 0.9em;
+  }
+  tr {
+    font-size: 0.8em;
+  }
 }
 @media screen and (max-width: 1360px) {
   .time {
     font-size: 2em;
+  }
+  .column {
+    display: none;
   }
 }
 @media screen and (max-width: 960px) {
@@ -69,6 +78,9 @@
   }
   .time {
     font-size: 3em;
+  }
+  .column {
+    display: none;
   }
 }
 

@@ -52,7 +52,7 @@ export default function DatePanel(props) {
     //             }
     // }, [])
     return (
-        <div style={{textAlign:'center', fontSize: '1.2em', width:'100%'}}>
+        <div style={{textAlign:'right', fontSize: '1.5em', width:'80%', fontWeight:'bold'}}>
             {time}
         </div>
     )

@@ -11,6 +11,7 @@ export default function Kebab(props) {
     const [change, setChange] = useState(false)
     const [init, setInit] = useState(true)
     useEffect(() => {
+        console.log('kebab', props.kebabData)
         if (props.kebabData) {
             // console.log(props.kebabData)
             let keys = Object.keys(props.kebabData);

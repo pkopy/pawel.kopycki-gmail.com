@@ -1,39 +1,19 @@
 import React, {useEffect} from 'react';
 import clsx from 'clsx';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import AppsIcon from '@material-ui/icons/Apps';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import dict from '../dictionary'
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
-import HomeIcon from '@material-ui/icons/Home';
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
-    Link
 } from "react-router-dom";
-import Carousel from "../Carousel/Carousel";
 import Main from "../Main/Main";
-import Date from "../Date/Date";
-import kolo from '../images/kolo.svg'
 import Kebab from "../Kebab/Kebab";
 import DisplayRow from "../Carousel/DisplayRow";
 import ScrollText from "../ScrollText/ScrollText";
+import DatePanel from "../Date/Date";
 
 const drawerWidth = 240;
 
@@ -200,67 +180,70 @@ export default function MiniDrawer(props) {
                 style={{backgroundColor:backgroundColor, zIndex:11100}}
             >
                 <Toolbar>
-                    <Typography variant="h6" noWrap>
+                    <Typography variant="h6" noWrap style={{width:'30%'}}>
                         <b>RB 2.4Y.F</b>
                     </Typography>
                     {/*<Typography variant="h6" noWrap>*/}
-                        <div  style={{width:500, marginLeft:100}}>
+                        <div  style={{width:'50%', marginLeft:100}}>
 
                             {errList.length>0&&<ScrollText text={errList}></ScrollText>}
                         </div>
                     {/*</Typography>*/}
+                    <DatePanel
+                        time={props.stat}
+                    />
                 </Toolbar>
             </AppBar>
-            <Drawer
-                variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open,
-                    [classes.drawerClose]: !open,
-                })}
-                classes={{
-                    paper: clsx({
-                        [classes.drawerOpen]: open,
-                        [classes.drawerClose]: !open,
-                    }),
-                }}
-            >
-                <div className={classes.toolbar}>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
-                    </IconButton>
-                </div>
-                <Divider/>
-                <List>
-                    <Link to='/' className='link'>
-                        <ListItem button>
+            {/*<Drawer*/}
+            {/*    variant="permanent"*/}
+            {/*    className={clsx(classes.drawer, {*/}
+            {/*        [classes.drawerOpen]: open,*/}
+            {/*        [classes.drawerClose]: !open,*/}
+            {/*    })}*/}
+            {/*    classes={{*/}
+            {/*        paper: clsx({*/}
+            {/*            [classes.drawerOpen]: open,*/}
+            {/*            [classes.drawerClose]: !open,*/}
+            {/*        }),*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    <div className={classes.toolbar}>*/}
+            {/*        <IconButton onClick={handleDrawerClose}>*/}
+            {/*            {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}*/}
+            {/*        </IconButton>*/}
+            {/*    </div>*/}
+            {/*    <Divider/>*/}
+            {/*    <List>*/}
+            {/*        <Link to='/' className='link'>*/}
+            {/*            <ListItem button>*/}
 
-                            <ListItemIcon><HomeIcon color="primary"/></ListItemIcon>
-                            <ListItemText/>
+            {/*                <ListItemIcon><HomeIcon color="primary"/></ListItemIcon>*/}
+            {/*                <ListItemText/>*/}
 
-                        </ListItem>
-                    </Link>
-                    {/*<Link to='/orderlist' className='link'>*/}
+            {/*            </ListItem>*/}
+            {/*        </Link>*/}
+            {/*        /!*<Link to='/orderlist' className='link'>*!/*/}
 
-                    {/*    <ListItem button>*/}
+            {/*        /!*    <ListItem button>*!/*/}
 
-                    {/*        <ListItemIcon><FormatListBulletedIcon color="primary"/></ListItemIcon>*/}
-                    {/*        <ListItemText/>*/}
+            {/*        /!*        <ListItemIcon><FormatListBulletedIcon color="primary"/></ListItemIcon>*!/*/}
+            {/*        /!*        <ListItemText/>*!/*/}
 
-                    {/*    </ListItem>*/}
-                    {/*</Link>*/}
+            {/*        /!*    </ListItem>*!/*/}
+            {/*        /!*</Link>*!/*/}
+            {/*        /!*=======KEBAB=======*!/*/}
+            {/*        /!*<Link to='/kebab' className='link'>*!/*/}
+            {/*        /!*    <ListItem button>*!/*/}
 
-                    <Link to='/kebab' className='link'>
-                        <ListItem button>
+            {/*        /!*        /!*<ListItemIcon><InboxIcon color="primary"/></ListItemIcon>*!/*!/*/}
+            {/*        /!*        <ListItemIcon><AppsIcon color='primary'/></ListItemIcon>*!/*/}
+            {/*        /!*        <ListItemText/>*!/*/}
 
-                            {/*<ListItemIcon><InboxIcon color="primary"/></ListItemIcon>*/}
-                            <ListItemIcon><AppsIcon color='primary'/></ListItemIcon>
-                            <ListItemText/>
+            {/*        /!*    </ListItem>*!/*/}
+            {/*        /!*</Link>*!/*/}
+            {/*    </List>*/}
 
-                        </ListItem>
-                    </Link>
-                </List>
-
-            </Drawer>
+            {/*</Drawer>*/}
             <main className={classes.content}>
                 <div className={classes.toolbar}/>
                 <Switch>
@@ -282,8 +265,8 @@ export default function MiniDrawer(props) {
                         <Kebab
                             details={details}
                             setDetails={setDetails}
-                            // kebabData={props.kebabData}
-                            kebabData={fakeData}
+                            kebabData={props.kebabData}
+                            // kebabData={fakeData}
                             activeRow={props.activeRow}
                             setActiveRow={props.setActiveRow}
                         />

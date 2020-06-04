@@ -10,13 +10,6 @@ export default function MyChart(props) {
     const [humidity1, setHumidity1] = useState([]);
     const [humidity2, setHumidity2] = useState([]);
     const [labels, setLabels] = useState([]);
-    // const [minMax, setMinMax] = useState({
-    //     minT:18,
-    //     maxT:22,
-    //     minH:44,
-    //     maxH:51,
-    //
-    // });
     const [minT, setMinT] = useState(18)
     const [maxT, setMaxT] = useState(22)
     const [minH, setMinH] = useState(44)
@@ -53,11 +46,7 @@ export default function MyChart(props) {
                 if (elem.humidity2 < minH) setMinH(Math.round(elem.humidity2 - 1))
                 if (elem.humidity2 > maxH) setMaxH(Math.round(elem.humidity2 + 1))
 
-
             }
-
-
-
 
         }
 
@@ -69,27 +58,8 @@ export default function MyChart(props) {
 
     }, [props.stat])
     const data = {
-        // labels: ['Temp'],
-        // labels: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
         labels:labels,
         datasets: [
-            // {
-            //     label: 'max',
-            //     yAxisID: 'left',
-            //     // data: [20, 50, 100, 75, 25, 0],
-            //     // showLine:showChart.max,
-            //     // this dataset is drawn below
-            //     borderColor: 'rgba(255,0,0,1)',
-            //     order: 3,
-            //     type: 'line',
-            //     fill: false,
-            //     borderWidth: 0,
-            //     pointBorderWidth: 0,
-            //     pointRadius: 0,
-            //     lineTension: 0.1,
-            // }
-
-
             {
                 // This dataset appears on the first axis
                 data: temp1,
@@ -102,17 +72,17 @@ export default function MyChart(props) {
                 // This binds the dataset to the left y axis
                 yAxisID: 'first-y-axis'
             },
-            {
-                // This dataset appears on the second axis
-                data: temp2,
-                label: 'Temperatura magazyn',
-                type: 'line',
-                fill: false,
-                borderColor: 'rgba(0,0,255,1)',
-                pointRadius: 0,
-                // This binds the dataset to the right y axis
-                yAxisID: 'first-y-axis'
-            },
+            // {
+            //     // This dataset appears on the second axis
+            //     data: temp2,
+            //     label: 'Temperatura magazyn',
+            //     type: 'line',
+            //     fill: false,
+            //     borderColor: 'rgba(0,0,255,1)',
+            //     pointRadius: 0,
+            //     // This binds the dataset to the right y axis
+            //     yAxisID: 'first-y-axis'
+            // },
             {
                 // This dataset appears on the second axis
                 data: humidity1,
@@ -124,18 +94,18 @@ export default function MyChart(props) {
                 // This binds the dataset to the right y axis
                 yAxisID: 'second-y-axis'
             },
-            {
-                // This dataset appears on the second axis
-                data: humidity2,
-                label: 'Wilgotność magazyn',
-                type: 'line',
-                fill: false,
-                borderColor: 'rgba(0,255,255,1)',
-                pointRadius: 0,
-
-                // This binds the dataset to the right y axis
-                yAxisID: 'second-y-axis'
-            }
+            // {
+            //     // This dataset appears on the second axis
+            //     data: humidity2,
+            //     label: 'Wilgotność magazyn',
+            //     type: 'line',
+            //     fill: false,
+            //     borderColor: 'rgba(0,255,255,1)',
+            //     pointRadius: 0,
+            //
+            //     // This binds the dataset to the right y axis
+            //     yAxisID: 'second-y-axis'
+            // }
         ]
     }
 
