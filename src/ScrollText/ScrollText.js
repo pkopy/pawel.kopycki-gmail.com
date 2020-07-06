@@ -4,33 +4,35 @@ import './ScrollText.scss'
 export default function SrollText(props) {
     const [text, setText] = useState('')
     const [opa, setOpa] = useState(1)
+    const [fontSize, setFontSize] = useState('1.3em')
     useEffect(() => {
 
         // while (props.text.length === 0) {
         //     console.log('ooo')
         // }
 
-            let arr = props.text
-            let x = 0
-            setText(arr[x])
+        let arr = props.text
+        if (props.fontSize) setFontSize(props.fontSize)
+        let x = 0
+        setText(arr[x])
+        setOpa(1)
+        setTimeout(() => {
+            setOpa(0)
+        }, 3000)
+        const timer = setInterval(() => {
+            x++
+            console.log('interval')
             setOpa(1)
+
+            if (x >= arr.length) {
+                x = 0
+            }
+            setText(arr[x])
             setTimeout(() => {
                 setOpa(0)
-            }, 3000)
-            const timer = setInterval(() => {
-                x++
-                console.log('interval')
-                setOpa(1)
+            },  3000)
 
-                if (x >= arr.length) {
-                    x = 0
-                }
-                setText(arr[x])
-                setTimeout(() => {
-                    setOpa(0)
-                }, 3000)
-
-            }, 5000)
+        },  5000)
 
         return (() => {
             clearInterval(timer)
@@ -58,8 +60,9 @@ export default function SrollText(props) {
         //     </div>
         //
         // </div>
-        <div style={{opacity: opa, transition:'2s', fontSize: '1.2rem'}}>
-            {text && text.length>0&&<p><b>{text.toUpperCase()}</b></p>}
+        <div className={props.className} style={{opacity: opa, transition: '2s', fontSize: props.fontSize}}>
+            {!props.small && text && text.length > 0 && <p><b>{text.toUpperCase()}</b></p>}
+            {props.small && text && text.length > 0 && <p><b>{text}</b></p>}
         </div>
     )
 }

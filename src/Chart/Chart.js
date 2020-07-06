@@ -26,7 +26,7 @@ export default function MyChart(props) {
         let humidity2 = [];
         let labels1 = [];
 
-        if (props.stat && props.stat.THB) {
+        if (props.stat && props.stat.THB && props.stat.THB.LastDayAvg) {
             const date = new Date()
             labels1.push(`${date.getHours() + 1}:00`)
             for (let elem of props.stat.THB.LastDayAvg) {
@@ -34,17 +34,17 @@ export default function MyChart(props) {
 
                 labels1.push(roundMinutes(date))
                 temp1.push(elem.temperature1)
-                temp2.push(elem.temperature2)
+                // temp2.push(elem.temperature2)
                 humidity1.push(elem.humidity1)
-                humidity2.push(elem.humidity2)
-                if (elem.temperature1 < minT) setMinT(Math.round(elem.temperature1 - 1))
-                if (elem.temperature1 > maxT) setMaxT(Math.round(elem.temperature1 + 1))
-                if (elem.temperature2 < minT) setMinT(Math.round(elem.temperature2 - 1))
-                if (elem.temperature2 > maxT) setMaxT(Math.round(elem.temperature2 + 1))
-                if (elem.humidity1 < minH) setMinH(Math.round(elem.humidity1 - 1))
-                if (elem.humidity1 > maxH) setMaxH(Math.round(elem.humidity1 + 1))
-                if (elem.humidity2 < minH) setMinH(Math.round(elem.humidity2 - 1))
-                if (elem.humidity2 > maxH) setMaxH(Math.round(elem.humidity2 + 1))
+                // humidity2.push(elem.humidity2)
+                if (elem.temperature1 < minT) setMinT(Math.round(elem.temperature1 - 2))
+                if (elem.temperature1 > maxT) setMaxT(Math.round(elem.temperature1 + 2))
+                // if (elem.temperature2 < minT) setMinT(Math.round(elem.temperature2 - 1))
+                // if (elem.temperature2 > maxT) setMaxT(Math.round(elem.temperature2 + 1))
+                if (elem.humidity1 < minH) setMinH(Math.round(elem.humidity1 - 2))
+                if (elem.humidity1 > maxH) setMaxH(Math.round(elem.humidity1 + 2))
+                // if (elem.humidity2 < minH) setMinH(Math.round(elem.humidity2 - 1))
+                // if (elem.humidity2 > maxH) setMaxH(Math.round(elem.humidity2 + 1))
 
             }
 
@@ -52,9 +52,9 @@ export default function MyChart(props) {
 
         setLabels(labels1.reverse())
         setTemp1(temp1.reverse());
-        setTemp2(temp2.reverse());
+        // setTemp2(temp2.reverse());
         setHumidity1(humidity1.reverse());
-        setHumidity2(humidity2.reverse());
+        // setHumidity2(humidity2.reverse());
 
     }, [props.stat])
     const data = {

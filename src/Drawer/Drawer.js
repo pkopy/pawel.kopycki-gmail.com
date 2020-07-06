@@ -5,9 +5,26 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import AppsIcon from '@material-ui/icons/Apps';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import dict from '../dictionary'
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import HomeIcon from '@material-ui/icons/Home';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
 import {
     Switch,
     Route,
+    Link
 } from "react-router-dom";
 import Main from "../Main/Main";
 import Kebab from "../Kebab/Kebab";
@@ -132,7 +149,7 @@ export default function MiniDrawer(props) {
     }, [errorList])
 
     useEffect(() => {
-        // console.log(props.kebabData, 'kebabData')
+        console.log(props.stat)
         makeFakeData(5)
 
         // console.log(fakeData,'fake data')
@@ -186,11 +203,11 @@ export default function MiniDrawer(props) {
                     {/*<Typography variant="h6" noWrap>*/}
                         <div  style={{width:'50%', marginLeft:100}}>
 
-                            {errList.length>0&&<ScrollText text={errList}></ScrollText>}
+                            {errList.length>0&&<ScrollText fontSize={'1.3em'}text={errList}></ScrollText>}
                         </div>
                     {/*</Typography>*/}
                     <DatePanel
-                        time={props.stat}
+                        time={props.stat?props.stat:undefined}
                     />
                 </Toolbar>
             </AppBar>
@@ -234,11 +251,11 @@ export default function MiniDrawer(props) {
             {/*        /!*=======KEBAB=======*!/*/}
             {/*        /!*<Link to='/kebab' className='link'>*!/*/}
             {/*        /!*    <ListItem button>*!/*/}
-
+            {/*        */}
             {/*        /!*        /!*<ListItemIcon><InboxIcon color="primary"/></ListItemIcon>*!/*!/*/}
             {/*        /!*        <ListItemIcon><AppsIcon color='primary'/></ListItemIcon>*!/*/}
             {/*        /!*        <ListItemText/>*!/*/}
-
+            {/*        */}
             {/*        /!*    </ListItem>*!/*/}
             {/*        /!*</Link>*!/*/}
             {/*    </List>*/}

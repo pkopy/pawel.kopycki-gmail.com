@@ -6,14 +6,14 @@ import Drawer from './Drawer/Drawer'
 
 function App() {
     const [socketAct, setSocketAct] = React.useState({});
-    const host = process.env.NODE_ENV !== 'production' ? 'localhost' : window.location.hostname;
+    const host = process.env.NODE_ENV !== 'production' ? '10.10.3.84' : window.location.hostname;
     const [stat, setStat] = React.useState({})
     const [kebabData, setKebabData] = React.useState([])
     const [activeRow, setActiveRow] = React.useState(2);
-
+    // const [host, setHost] = React.useState(process.env.NODE_ENV !== 'production' ? '10.10.3.84' : window.location.hostname)
     const [x,setX] = useState(false)
     const run = () => {
-        let socket = new WebSocket(`ws://10.10.2.232:1888/ws/status`);
+        let socket = new WebSocket(`ws://${host}:1880/ws/status`);
         socket.onopen = () => {
             console.log('socket Open')
             setSocketAct(socket);

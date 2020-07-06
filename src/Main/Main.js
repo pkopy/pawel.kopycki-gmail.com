@@ -11,6 +11,7 @@ import hiArrow from '../images/hiArrow.svg'
 import clock from '../images/clock.svg'
 import Chart from "../Chart/Chart";
 import Orders from "../Orders/Orders";
+import ScrollText from "../ScrollText/ScrollText";
 
 
 const useStyles = makeStyles(theme => ({
@@ -52,7 +53,7 @@ const robotStat = {
 
 const errorsDetails = {
     GStatErr: {
-        err:'Błąd ogólny sterownika',
+        err: 'Błąd ogólny sterownika',
         title: 'Wciśnięty wyłącznik awaryjny, upewnij się że',
         items: [
             'Filtry są na swoich miejscach',
@@ -69,17 +70,18 @@ const errorsDetails = {
     GMassErr: {
         err: 'Błąd masy zero',
         title: 'Błąd masy zero',
-        items: ['LoremIpsum1']
+        items: ['Sprawdź czy magazyn wzorców był kompletny',
+            'Sprawdź czy filtr znajduje się w prawidłowym miejscu']
     },
     GReferenceErr: {
         err: 'Za duża różnica masy wzorca',
         title: 'Za duża różnica masy wzorca',
-        items: ['LoremIpsum2']
+        items: ['Upewnij się czy wzożec masy oraz filtry ślepe są prawidłowe']
     },
     GErrEmpty: {
         err: 'Nieoczekiwany brak filtra',
         title: 'Nieoczekiwany brak filtra',
-        items: ['LoremIpsum3']
+        items: ['Sprawdź czy filtr znajduje się w prawidłowym miejscu']
     },
     GStatMd: {
         err: 'Błąd otwartych drzwiczek',
@@ -112,17 +114,20 @@ export default function Main(props) {
 
     //check THB every 5 sec
     useEffect(() => {
-        if (props.stat.THB && !lastTemp) {
+        if (props.stat && props.stat.THB && !lastTemp) {
             setTemp(props.stat.THB.Temperature);
+            // setTemp(15);
             setHumidity(props.stat.THB.Humidity);
+            // setHumidity(40);
             setPressure(props.stat.THB.Pressure);
         }
+        console.log(props.stat)
         const thb = () => {
             setLastTemp(temp);
             setLastHumidity(humidity);
             setLastPressure(pressure);
             // console.log(lastTemp, temp)
-            if (props.stat.THB) {
+            if (props.stat && props.stat.THB) {
                 setTemp(props.stat.THB.Temperature);
                 setHumidity(props.stat.THB.Humidity);
                 setPressure(props.stat.THB.Pressure);
@@ -132,32 +137,36 @@ export default function Main(props) {
 
     }, [props.stat])
     useEffect(() => {
-        setFilter(filterType[props.stat.Filter_Type]);
-        setRobotStatus(robotStat[props.stat.Robot_Status]);
-        setRobotError(robotErr[props.stat.Main_Error]);
-        let errorsH = 0;
-        let err = []
-        if (props.stat && props.stat.Main_Error) {
-            for (let elem in props.stat.Main_Error) {
-                // console.log(elem)
-                errorsH += props.stat.Main_Error[elem]
-                if (props.stat.Main_Error[elem] && errorsDetails[elem]) err.push(errorsDetails[elem])
-            }
-            setErrors(errorsH)
-            setList(err)
-            props.setErrorList(err)
-            console.log(list)
-            console.log('errors', errors)
-            for (let elem in props.stat.Main_Error) {
-                // console.log(elem)
-                if (props.stat.Main_Error[elem]) {
-                    setBackgroundStatus('#ff5b5b');
-                    props.setBackgroundColor('#ff5b5b')
-                    break
-                } else {
+        if (props.stat) {
 
-                    setBackgroundStatus(undefined)
-                    props.setBackgroundColor(undefined)
+
+            setFilter(filterType[props.stat.Filter_Type]);
+            setRobotStatus(robotStat[props.stat.Robot_Status]);
+            setRobotError(robotErr[props.stat.Main_Error]);
+            let errorsH = 0;
+            let err = []
+            if (props.stat && props.stat.Main_Error) {
+                for (let elem in props.stat.Main_Error) {
+                    // console.log(elem)
+                    errorsH += props.stat.Main_Error[elem]
+                    if (props.stat.Main_Error[elem] && errorsDetails[elem]) err.push(errorsDetails[elem])
+                }
+                setErrors(errorsH)
+                setList(err)
+                props.setErrorList(err)
+                console.log(list)
+                console.log('errors', errors)
+                for (let elem in props.stat.Main_Error) {
+                    // console.log(elem)
+                    if (props.stat.Main_Error[elem]) {
+                        setBackgroundStatus('#ff5b5b');
+                        props.setBackgroundColor('#ff5b5b')
+                        break
+                    } else {
+
+                        setBackgroundStatus(undefined)
+                        props.setBackgroundColor(undefined)
+                    }
                 }
             }
         }
@@ -165,7 +174,7 @@ export default function Main(props) {
     useEffect(() => {
         props.setDetails({})
         props.setActiveRow(2)
-
+        // props.stat.THB = null
         return (() => {
             props.setDetails({})
             props.setActiveRow(2)
@@ -183,7 +192,7 @@ export default function Main(props) {
         <div className={classes.root}>
             <Grid container spacing={3}>
 
-                {props.stat.Main_Error && errors > 0 &&<Alert
+                {props.stat && props.stat.Main_Error && errors > 0 && <Alert
                     title={'Błąd'}
                     // list={['Filtry są na swoich miejscach', 'Drzwiczki są zamknięte', 'Brak obiektów trzecich w komorze', 'Wyłącznik awaryjny jest wyciśnięty']}
                     list={list}
@@ -195,19 +204,29 @@ export default function Main(props) {
                     <Paper className={classes.paper} style={{height: 400}}>
 
                         <h2 style={{fontSize: '2em'}}>FILTR:</h2>
-                        <div style={{margin:'20px 0 0 0'}}>
-                            <p style={{fontSize: '2em', margin: 0, paddingTop: 10, borderTop: '1px dotted'}}>Kod QR: </p>
-                            <p style={{fontSize: '2em', margin: 0}}><b>{props.stat && props.stat.Qr > 0 ? props.stat.Qr : '--'}</b></p>
+                        <div style={{margin: '20px 0 0 0'}}>
+                            <p style={{fontSize: '2em', margin: 0, paddingTop: 10, borderTop: '1px dotted'}}>Kod
+                                QR: </p>
+                            <p style={{fontSize: '2em', margin: 0}}>
+                                <b>{props.stat && props.stat.Qr > 0 ? props.stat.Qr : '--'}</b></p>
                         </div>
-                        <div >
+                        <div>
 
-                            <p style={{fontSize: '2em', margin: 0, paddingTop: 10, borderTop: '1px dotted'}}>Masa filtra: </p>
-                            <p style={{fontSize: '2em', margin: 0}}><b>{props.stat && props.stat.Mass > 0 ? props.stat.Mass : '--'}</b></p>
+                            <p style={{fontSize: '2em', margin: 0, paddingTop: 10, borderTop: '1px dotted'}}>Masa
+                                filtra: </p>
+                            <p style={{fontSize: '2em', margin: 0}}>
+                                <b>{props.stat && props.stat.Mass > 0 ? props.stat.Mass : '--'}</b></p>
                         </div>
-                        <div >
+                        <div>
 
-                            <p style={{fontSize: '2em', margin: 0, paddingTop: 10, borderTop: '1px dotted'}}>Położenie: </p>
-                            <p style={{fontSize: '2em', margin: 0, borderBottom: '1px dotted'}}><b>{props.stat && props.stat.FilterInfo ? props.stat.FilterInfo : '--'}</b></p>
+                            <p style={{
+                                fontSize: '2em',
+                                margin: 0,
+                                paddingTop: 10,
+                                borderTop: '1px dotted'
+                            }}>Położenie: </p>
+                            <p style={{fontSize: '2em', margin: 0, borderBottom: '1px dotted'}}>
+                                <b>{props.stat && props.stat.FilterInfo ? props.stat.FilterInfo : '--'}</b></p>
                         </div>
                     </Paper>
                 </Grid>
@@ -215,7 +234,7 @@ export default function Main(props) {
                     <Paper className={classes.paper} style={{height: 400, overflow: "auto"}}>
                         <h2 style={{fontSize: '2em'}}>AKTUALNE ZLECENIA:</h2>
                         <Orders
-                            data={props.stat.OrdersInProgress}
+                            data={props.stat ? props.stat.OrdersInProgress : undefined}
                         />
                     </Paper>
                 </Grid>
@@ -224,38 +243,64 @@ export default function Main(props) {
                 <Grid item xs={12} md={3} xl={3}>
                     <Paper className={classes.paper} style={{height: 400}}>
                         <h2 className={'tit'}>WARUNKI ŚRODOWISKOWE:</h2>
-                        <div style={{display: "flex", borderTop: '1px dotted', margin:'20px 0 0 0'}}>
-                            <div style={{width: '90%', fontSize: '2em'}}>
+                        <div style={{display: "flex", borderTop: '1px dotted', margin: '20px 0 0 0'}}>
+                            {(!temp)&&<div style={{ fontSize: '2em'}}>
+                                <p className={'t1'}>Temperatura: </p>
+                            </div>}
+                            {(temp && temp <= 21 && temp >= 19)&&<div style={{ fontSize: '2em'}}>
                                 <p className={'t1'}>Temperatura: <b>{temp} °C</b></p>
-                            </div>
-                            <div className={'arrow'} transform="translate 1s">
-                                {temp <=21 && temp >= 19 && <img src={okArrow} width={50} alt='arrow'/>}
-                                {temp >21 && <img src={hiArrow} width={50} alt='arrow'/>}
-                                {temp<19 && <img src={lowArrow} width={50} alt='arrow'/>}
-                            </div>
+                            </div>}
+                            {temp && !(temp <= 21 && temp >= 19)&&<div style={{width: '100%', fontSize: '2em'}}>
+                                <p className={'t1 errorDiv'}>Temperatura: <b>{temp} °C</b></p>
+                            </div>}
+
+                            {/*{temp &&!(temp <= 21 && temp >= 19)&&<ScrollText*/}
+                            {/*    className={'t1 red'}*/}
+                            {/*    time={1000} small = {true}*/}
+                            {/*    text={[`Temperatura: ${temp} °C`]}*/}
+                            {/*    fontSize={'2em'}*/}
+                            {/*    style={{width: '90%', fontSize: '2em',transition:'2s'}}>*/}
+
+                            {/*</ScrollText>}*/}
+                            {/*<div className={'arrow'} transform="translate 1s">*/}
+                                {/*{ && <img src={okArrow} width={50} alt='arrow'/>}*/}
+                                {/*{temp > 21 && <img src={hiArrow} width={50} alt='arrow'/>}*/}
+                                {/*{temp < 19 && <img src={lowArrow} width={50} alt='arrow'/>}*/}
+                            {/*</div>*/}
                         </div>
                         <div style={{display: "flex", borderTop: '1px dotted'}}>
-                            <div style={{width: '90%', fontSize: '2em'}}>
+                            {(!humidity)&&<div style={{ fontSize: '2em'}}>
+                                <p className={'t1'}>Wilgotność: </p>
+                            </div>}
+                            {humidity && humidity <= 50 && humidity >= 45 &&<div style={{fontSize: '2em'}}>
                                 <p className={'t1'}>Wilgotność: <b>{humidity} %</b></p>
-                            </div>
-                            <div className={'arrow'} >
-                                {humidity <=50 && humidity >= 45 && <img src={okArrow} width={50} alt='arrow'/>}
-                                {humidity > 50 && <img src={hiArrow} width={50} alt='arrow'/>}
-                                {humidity < step && <img src={lowArrow} width={50} alt='arrow'/>}
-                            </div>
+                            </div>}
+                            {humidity &&!(humidity <= 50 && humidity >= 45) &&<div style={{width:'100%', fontSize: '2em'}}>
+                                <p className={'t1 errorDiv'}>Wilgotność: <b>{humidity} %</b></p>
+                            </div>}
+                            {/*<div className={'arrow'}>*/}
+                            {/*    {humidity <= 50 && humidity >= 45 && <img src={okArrow} width={50} alt='arrow'/>}*/}
+                            {/*    {humidity > 50 && <img src={hiArrow} width={50} alt='arrow'/>}*/}
+                            {/*    {humidity < step && <img src={lowArrow} width={50} alt='arrow'/>}*/}
+                            {/*</div>*/}
                         </div>
                         <div style={{display: "flex", borderTop: '1px dotted', borderBottom: '1px dotted'}}>
-                            <div style={{width: '90%', fontSize: '2em'}}>
+                            {!pressure&&<div style={{width: '90%', fontSize: '2em'}}>
+
+                                <p className={'t1'}>Ciśnienie: </p>
+                            </div>}
+
+                            {pressure&&<div style={{width: '90%', fontSize: '2em'}}>
 
                                 <p className={'t1'}>Ciśnienie: <b>{pressure} hPa</b></p>
-                            </div>
-                            <div className={'arrow'}  onClick={send}>
+                            </div>}
+                            {/*<div className={'arrow'} onClick={send}>*/}
 
 
-                                <img src={okArrow} width={50} alt='arrow'/>
+                            {/*    <img src={okArrow} width={50} alt='arrow'/>*/}
 
 
-                            </div>
+                            {/*</div>*/}
 
                         </div>
                     </Paper>

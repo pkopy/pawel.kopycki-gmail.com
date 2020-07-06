@@ -10,13 +10,18 @@
 }
 
 @keyframes error {
-  0%{background-color: red;}
-  50% {background-color: #f4ff69;}
-  100%{background-color: red;}
+  0%{background-color: #ff5b5b;}
+  25% {background-color: #fff;}
+  50%{background-color: #ff5b5b;}
+  75%{background-color: #fff;}
+  100%{background-color: #ff5b5b;}
 }
 
 .arrow {
   padding: 20px 5px
+}
+.red {
+  color: red
 }
 .tit {
   font-size: 1.8em;

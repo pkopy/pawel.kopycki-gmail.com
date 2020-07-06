@@ -37,7 +37,7 @@ export default function DatePanel(props) {
     // }, [])
     useEffect(() => {
         // console.log(props.time)
-        if (props.time.Time) setTime(props.time.Time.Current_Time)
+        if (props.time&&props.time.Time) setTime(props.time.Time.Current_Time)
         // console.log(time)
     }, [props.time])
 
